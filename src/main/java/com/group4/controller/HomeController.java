@@ -9,4 +9,9 @@ public class HomeController {
 	public String home(){
 		return "index";
 	}
+	
+	@RequestMapping("/tiep-nhan")
+	public String addPatient(){
+		return "add-patient";
+	}
 }
