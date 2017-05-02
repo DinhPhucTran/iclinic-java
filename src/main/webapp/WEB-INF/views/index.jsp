@@ -1,5 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page isELIgnored="false"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -12,12 +16,12 @@
 <title>Clinic</title>
 
 <!-- Bootstrap -->
-<link href="resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
-<link href="resources/css/font-awesome.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- Custom Theme Style -->
-<link href="resources/css/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -32,20 +36,7 @@
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Plain Page</h3>
-						</div>
-
-						<div class="title_right">
-							<div
-								class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-								<div class="input-group">
-									<input type="text" class="form-control"
-										placeholder="Search for..."> <span
-										class="input-group-btn">
-										<button class="btn btn-default" type="button">Go!</button>
-									</span>
-								</div>
-							</div>
+							<h3>Clinic Management System</h3>
 						</div>
 					</div>
 
@@ -56,10 +47,6 @@
 							<div class="x_panel">
 								<div class="x_title">
 									<h2>Home</h2>
-									<ul class="nav navbar-right panel_toolbox">
-										<li><a class="collapse-link"><i
-												class="fa fa-chevron-up"></i></a></li>
-									</ul>
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">Add content to the page ...</div>

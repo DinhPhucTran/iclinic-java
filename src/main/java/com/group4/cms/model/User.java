@@ -1,0 +1,102 @@
+package com.group4.cms.model;
+
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "user")
+public class User {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+	
+	@Column(name = "username")
+	private String userName;
+	
+	@Column(name = "password")
+	private String password;
+	
+	@Column(name = "enabled")
+	private boolean isEnabled;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<UserRole> roles;
+	
+	@ManyToOne
+	@JoinColumn(name = "bo_phan_id")
+	private BoPhan boPhan;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "image_id")
+	private FileWrapper profileImage;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String username) {
+		this.userName = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
+	public List<UserRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<UserRole> roles) {
+		this.roles = roles;
+	}
+
+	public FileWrapper getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(FileWrapper profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public BoPhan getBoPhan() {
+		return boPhan;
+	}
+
+	public void setBoPhan(BoPhan boPhan) {
+		this.boPhan = boPhan;
+	}
+	
+}
