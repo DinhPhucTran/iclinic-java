@@ -26,6 +26,10 @@ public class BoPhan {
 		return id;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setMaBoPhan(int id) {
 		this.id = id;
 	}

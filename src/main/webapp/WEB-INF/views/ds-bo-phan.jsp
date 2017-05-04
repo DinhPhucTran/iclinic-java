@@ -58,7 +58,7 @@
 									<h2>Danh sách Bộ phận</h2>
 									<div class="navbar-right">
 										<button class="btn btn-primary" data-toggle="modal"
-											data-target="#modal-add-user">
+											data-target="#modal-them-bp">
 											<i class="fa fa-plus" aria-hidden="true"></i> Thêm bộ phận
 										</button>
 									</div>
@@ -69,18 +69,26 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>ID</th>
 												<th>Tên bộ phận</th>
+												<th>Ghi chú</th>
 												<th></th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach items="${dsBp}" var="bp">
 												<tr>
-													<td>${bp.id}</td>
 													<td>${bp.tenBoPhan}</td>
-													<td><button class="btn btn-info"><i class="fa fa-pencil-square-o"></i></button>
-													 <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+													<td>${bp.ghiChu}</td>
+													<td><button class="btn btn-info" 
+																data-toggle="modal" data-target="#modal-sua-bp"
+																onclick="suaBoPhan(${bp.id}, '${bp.tenBoPhan}', '${bp.ghiChu}')">
+															<i class="fa fa-pencil-square-o"></i>
+														</button>
+														<button class="btn btn-danger"
+																data-toggle="modal" data-target="#modal-xoa-bp"
+																onclick="xoaBoPhan(${bp.id}, '${bp.tenBoPhan}')">
+															<i class="fa fa-trash-o"></i>
+														</button></td>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -91,8 +99,8 @@
 					</div>
 				</div>
 
-				<!-- Modal Add user -->
-				<div class="modal fade" id="modal-add-user">
+				<!-- Modal Them bo phan -->
+				<div class="modal fade" id="modal-them-bp">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 
@@ -100,71 +108,31 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Thêm người dùng
-									mới</h4>
+								<h4 class="modal-title" id="myModalLabel">Thêm bộ phận</h4>
 							</div>
 
 							<form:form class="form-horizontal form-label-left"
-								action="add-user" method="POST" modelAttribute="user"
-								enctype="multipart/form-data">
+								action="them-bo-phan" method="POST" modelAttribute="boPhan">
 								<div class="modal-body">
-									<div class="row">
-										<div class="col-md-4">
-											<div class="ava-container">
-												<div id="img-preview" class="ava-image">
-													<input type="file" name="image1" class="ava-input" id="img-upload"/>
-												</div>
-												<div class="ava-middle" onclick="openFileDialog()" title="Chọn ảnh đại diện">
-													<div class="ava-text"><i class="fa fa-camera"></i></div>
-												</div>
-											</div>
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="tenBoPhan" for="ten">Tên bộ phận <span
+												class="required">*</span>
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input type="text" id="ten" required="required"
+												class="form-control col-md-7 col-xs-12" path="tenBoPhan"></form:input>
 										</div>
-										<div class="col-md-8">
-											<div class="item form-group">
-												<form:label
-													class="control-label col-md-3 col-sm-3 col-xs-12"
-													path="userName" for="username">UserName <span
-														class="required">*</span>
-												</form:label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:input type="text" id="username" required="required"
-														class="form-control col-md-7 col-xs-12" path="userName"></form:input>
-												</div>
-											</div>
+									</div>
 
-											<div class="item form-group">
-												<form:label
-													class="control-label col-md-3 col-sm-3 col-xs-12"
-													path="password" for="password">Mật khẩu <span
-														class="required">*</span>
-												</form:label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:input type="text" id="password" required="required"
-														class="form-control col-md-7 col-xs-12" path="password"></form:input>
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="ghiChu" for="ghiChu">Ghi chú
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input type="text" id="ghiChu"
+												class="form-control col-md-7 col-xs-12" path="ghiChu"></form:input>
 
-												</div>
-												<div class="col-md-2">
-													<button class="btn btn-success" id="bt-gen-pass"
-														type="button" onclick="generatePassword()">
-														<i class="fa fa-random" title="Tạo mật khẩu"></i>
-													</button>
-												</div>
-											</div>
-
-											<div class="form-group">
-												<form:label
-													class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="roles" path="roles">Roles <span
-														class="required">*</span>
-												</form:label>
-												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:select class="form-control" id="roles" path="roles"
-														multiple="true">
-														<form:options items="${roleList}" itemValue="id"
-															itemLabel="position"></form:options>
-													</form:select>
-												</div>
-											</div>
 										</div>
 									</div>
 								</div>
@@ -175,13 +143,91 @@
 									<button type="submit" class="btn btn-primary">Lưu</button>
 								</div>
 							</form:form>
-
-
-
 						</div>
 					</div>
 				</div>
-				<!-- /end Modal Add user -->
+				<!-- /end Modal Them bo phan -->
+				
+				<!-- Modal Sua bo phan -->
+				<div class="modal fade" id="modal-sua-bp">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Cập nhật thông tin bộ phận</h4>
+							</div>
+
+							<form:form class="form-horizontal form-label-left"
+								action="them-bo-phan" method="POST" modelAttribute="boPhan">
+								<div class="modal-body">
+									<form:hidden path="id" id="edit-id"/>
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="tenBoPhan" for="ten">Tên bộ phận <span
+												class="required">*</span>
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input type="text" id="edit-ten" required="required"
+												class="form-control col-md-7 col-xs-12" path="tenBoPhan"></form:input>
+										</div>
+									</div>
+
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="ghiChu" for="ghiChu">Ghi chú
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input type="text" id="edit-ghiChu"
+												class="form-control col-md-7 col-xs-12" path="ghiChu"></form:input>
+
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Hủy</button>
+									<button type="submit" class="btn btn-primary">Lưu</button>
+								</div>
+							</form:form>
+						</div>
+					</div>
+				</div>
+				<!-- /end Modal Sua bo phan -->
+				
+				<!-- Modal Xoa bo phan -->
+				<div class="modal fade" id="modal-xoa-bp">
+					<div class="modal-dialog modal-sm">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">Xóa bộ phận</h4>
+							</div>
+
+							<form:form class="form-horizontal form-label-left"
+								action="xoa-bo-phan" method="POST" modelAttribute="boPhan">
+								<div class="modal-body">
+									<p id="del-noti"></p>
+									<form:hidden path="id" id="del-id"/>
+									<form:hidden path="tenBoPhan" id="del-ten"/>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Hủy</button>
+									<button type="submit" class="btn btn-danger">Xóa</button>
+								</div>
+							</form:form>
+						</div>
+					</div>
+				</div>
+				<!-- /end Modal xoa bo phan -->
 
 			</div>
 			<!-- /page content -->
@@ -199,7 +245,7 @@
 	<script type="text/javascript"
 		src="resources/plugin/datatables/datatables.min.js"></script>
 	<script src="resources/plugin/chosen/chosen.jquery.js"></script>
-	
+
 	<script src="resources/js/jquery.uploadPreview.js"></script>
 
 	<script>
@@ -216,40 +262,18 @@
 					className : "btn-sm"
 				}, ]
 			});
-
-			$("#roles").chosen({
-				width : "100%",
-				placeholder_text_multiple : "Chọn role"
-			});
-			
-			$.uploadPreview({
-			    input_field: "#img-upload",   // Default: .image-upload
-			    preview_box: "#img-preview",  // Default: .image-preview
-			    label_field: "#image-label",    // Default: .image-label
-			    label_default: "Choose File",   // Default: Choose File
-			    label_selected: "Change File",  // Default: Change File
-			    no_label: true                 // Default: false
-			  });
 		});
 
-		function generatePassword() {
-			$("#password").val(randomPass());
-		}
-
-		function randomPass() {
-			//(Math.random() + 1).toString(36).substring(2, 7)
-			var text = "";
-			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-			for (var i = 0; i < 5; i++)
-				text += possible.charAt(Math.floor(Math.random()
-						* possible.length));
-
-			return text;
+		function suaBoPhan(id, ten, ghiChu){
+			$("#edit-id").val(id);
+			$("#edit-ten").val(ten);
+			$("#edit-ghiChu").val(ghiChu);
 		}
 		
-		function openFileDialog(){
-			$("#img-upload").trigger("click");
+		function xoaBoPhan(id, ten){
+			$("#del-noti").html("Anh/chị có chắc chắn muốn xóa <big>" + ten + "<big>");
+			$("#del-id").val(id);
+			$("#del-ten").val(ten);
 		}
 	</script>
 </body>

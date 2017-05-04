@@ -1,5 +1,6 @@
 package com.group4.cms.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,10 +33,13 @@ public class User {
 	@Column(name = "enabled")
 	private boolean isEnabled;
 	
+	@Column(name = "full_name")
+	private String fullName;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<UserRole> roles;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bo_phan_id")
 	private BoPhan boPhan;
 	
@@ -98,5 +102,26 @@ public class User {
 	public void setBoPhan(BoPhan boPhan) {
 		this.boPhan = boPhan;
 	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 	
+	public List<Integer> getRoleIdList(){
+		List<Integer> ids = new ArrayList<Integer>();
+		if(this.roles.size() >0) {
+			for(UserRole role : this.roles){
+				ids.add(role.getId());
+			}
+		}
+		return ids;
+	}
+	
+	public Integer getBoPhanId(){
+		return this.getBoPhan() != null ? this.getBoPhan().getId() : 0;
+	}
 }

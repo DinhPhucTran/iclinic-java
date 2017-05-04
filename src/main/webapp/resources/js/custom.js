@@ -1840,7 +1840,7 @@ if (typeof NProgress != 'undefined') {
 			if( typeof (PNotify) === 'undefined'){ return; }
 			console.log('init_PNotify');
 			
-			new PNotify({
+			/*new PNotify({
 			  title: "PNotify",
 			  type: "info",
 			  text: "Welcome. Try hovering over me. You can click things behind me, because I'm non-blocking.",
@@ -1860,9 +1860,9 @@ if (typeof NProgress != 'undefined') {
 
 				return false;
 			  }
-			});
+			});*/
 
-		}; 
+		};
 	   
 	   
 	   /* CUSTOM NOTIFICATION */
