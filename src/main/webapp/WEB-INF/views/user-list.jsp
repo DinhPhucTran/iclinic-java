@@ -118,8 +118,7 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Thêm người dùng
-									mới</h4>
+								<h4 class="modal-title">Thêm người dùng mới</h4>
 							</div>
 
 							<form:form class="form-horizontal form-label-left"
@@ -129,9 +128,8 @@
 									<div class="row">
 										<div class="col-md-4">
 											<div class="ava-container">
-												<div id="img-preview" class="ava-image">
-													<input type="file" name="image1" class="ava-input"
-														id="img-upload" />
+												<div class="ava-image" id="img-preview">
+													<input type="file" name="image1" class="ava-input" id="img-upload" />
 												</div>
 												<div class="ava-middle" onclick="openFileDialog()"
 													title="Chọn ảnh đại diện">
@@ -177,7 +175,7 @@
 
 												</div>
 												<div class="col-md-2">
-													<button class="btn btn-success" id="bt-gen-pass"
+													<button class="btn btn-success bt-gen-pass"
 														type="button" onclick="generatePassword()">
 														<i class="fa fa-random" title="Tạo mật khẩu"></i>
 													</button>
@@ -235,7 +233,7 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Cập nhật thông tin người dùng</h4>
+								<h4 class="modal-title">Cập nhật thông tin người dùng</h4>
 							</div>
 
 							<form:form class="form-horizontal form-label-left"
@@ -246,11 +244,10 @@
 									<div class="row">
 										<div class="col-md-4">
 											<div class="ava-container">
-												<div id="img-preview" class="ava-image">
-													<input type="file" name="image1" class="ava-input"
-														id="img-upload" />
+												<div class="ava-image" id="edit-img-preview">
+													<input type="file" name="image1" class="ava-input" id="edit-img-upload" />
 												</div>
-												<div class="ava-middle" onclick="openFileDialog()"
+												<div class="ava-middle" onclick="openFileDialog2()"
 													title="Chọn ảnh đại diện">
 													<div class="ava-text">
 														<i class="fa fa-camera"></i>
@@ -427,7 +424,15 @@
 				label_default : "Choose File", // Default: Choose File
 				label_selected : "Change File", // Default: Change File
 				no_label : true
-			// Default: false
+			});
+			
+			$.uploadPreview({
+				input_field : "#edit-img-upload",
+				preview_box : "#edit-img-preview",
+				label_field : "#image-label",
+				label_default : "Choose File",
+				label_selected : "Change File",
+				no_label : true
 			});
 			
 		});
@@ -452,6 +457,10 @@
 			$("#img-upload").trigger("click");
 		}
 		
+		function openFileDialog2() {
+			$("#edit-img-upload").trigger("click");
+		}
+		
 		function editUser(id, fullName, userName, roles, boPhan){
 			
 			$("#edit-roles option").each(function(){
@@ -471,6 +480,9 @@
 			});
 			
 			$("edit-bp").val(boPhan);
+			
+			$("#img-preview").css("background-image", "url('resources/images/user.jpg')");
+			$("#edit-img-preview").css("background-image", "url('resources/images/user.jpg')");
 			
 		}
 	</script>

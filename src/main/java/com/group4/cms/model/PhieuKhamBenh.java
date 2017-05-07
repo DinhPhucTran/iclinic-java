@@ -2,14 +2,46 @@ package com.group4.cms.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "phieu_kham_benh")
 public class PhieuKhamBenh {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maPhieuKhamBenh;
+	
+	@ManyToOne
+	@JoinColumn(name = "benh_nhan_id")
 	private BenhNhan benhNhan;
-	private NhanVien bacSi;
+	
+	@ManyToOne
+	@JoinColumn(name = "bac_si_id")
+	private User bacSi;
+	
+	@Column(name = "ngay_kham")
 	private Date ngayKham;
+	
+	@Column(name = "ly_do")
 	private String lyDoKham;
+	
+	@Column(name = "chan_doan")
 	private String chanDoan;
+	
+	@Column(name = "loi_dan")
 	private String loiDan;
+	
+	@Column(name = "tinh_trang_thanh_toan")
 	private boolean tinhTrangThanhToan;
 
 	public int getMaPhieuKhamBenh() {
@@ -28,11 +60,11 @@ public class PhieuKhamBenh {
 		this.benhNhan = benhNhan;
 	}
 
-	public NhanVien getBacSi() {
+	public User getBacSi() {
 		return bacSi;
 	}
 
-	public void setBacSi(NhanVien bacSi) {
+	public void setBacSi(User bacSi) {
 		this.bacSi = bacSi;
 	}
 

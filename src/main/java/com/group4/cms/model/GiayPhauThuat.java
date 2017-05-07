@@ -2,11 +2,37 @@ package com.group4.cms.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "giay_phau_thuat")
 public class GiayPhauThuat {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maGiayPhauThuat;
-	private NhanVien bacSi;
+	
+	@ManyToOne
+	@JoinColumn(name = "bac_si_id")
+	private User bacSi;
+	
+	@ManyToOne
+	@JoinColumn(name = "benh_nhan_id")
 	private BenhNhan benhNhan;
+	
+	@ManyToOne
+	@JoinColumn(name = "dv_id")
 	private DichVu dichVu;
+	
+	@Column(name = "thoi_gian_thuc_hien")
 	private Date thoiGianThucHien;
 
 	public int getMaGiayPhauThuat() {
@@ -17,11 +43,11 @@ public class GiayPhauThuat {
 		this.maGiayPhauThuat = maGiayPhauThuat;
 	}
 
-	public NhanVien getBacSi() {
+	public User getBacSi() {
 		return bacSi;
 	}
 
-	public void setBacSi(NhanVien bacSi) {
+	public void setBacSi(User bacSi) {
 		this.bacSi = bacSi;
 	}
 

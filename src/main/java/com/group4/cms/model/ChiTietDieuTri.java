@@ -2,11 +2,32 @@ package com.group4.cms.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "chi_tiet_dieu_tri")
 public class ChiTietDieuTri {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maChiTietDieuTri;
-	private HoSoDieuTriNoiTru hoSoDieuTriNoiTru;
+	
+	//@OneToOne
+	//private HoSoDieuTriNoiTru hoSoDieuTriNoiTru;
+	
+	@Column(name = "thoi_gian_dieu_tri")
 	private Date thoiGianDieuTri;
+	
+	@Column(name = "tinh_trang")
 	private String tinhTrang;
+	
+	@Column(name = "ghi_chu")
 	private String ghiChu;
 
 	public int getMaChiTietDieuTri() {
@@ -17,13 +38,13 @@ public class ChiTietDieuTri {
 		this.maChiTietDieuTri = maChiTietDieuTri;
 	}
 
-	public HoSoDieuTriNoiTru getHoSoDieuTriNoiTru() {
+	/*public HoSoDieuTriNoiTru getHoSoDieuTriNoiTru() {
 		return hoSoDieuTriNoiTru;
 	}
 
 	public void setHoSoDieuTriNoiTru(HoSoDieuTriNoiTru hoSoDieuTriNoiTru) {
 		this.hoSoDieuTriNoiTru = hoSoDieuTriNoiTru;
-	}
+	}*/
 
 	public Date getThoiGianDieuTri() {
 		return thoiGianDieuTri;

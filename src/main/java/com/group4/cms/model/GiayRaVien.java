@@ -1,11 +1,39 @@
 package com.group4.cms.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "giay_ra_vien")
 public class GiayRaVien {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maGiay;
+	
+	@ManyToOne
+	@JoinColumn(name = "benh_nhan_id")
 	private BenhNhan benhNhan;
+	
+	@ManyToOne
+	@JoinColumn(name = "giay_nhap_vien_id")
 	private GiayNhapVien giayNhapVien;
-	private NhanVien nguoiLamThuTuc;
+	
+	@ManyToOne
+	@JoinColumn(name = "nhan_vien_id")
+	private User nguoiLamThuTuc;
+	
+	@Column(name = "chan_doan")
 	private String chanDoan;
+	
+	@Column(name = "loi_dan")
 	private String loiDan;
 
 	public int getMaGiay() {
@@ -32,11 +60,11 @@ public class GiayRaVien {
 		this.giayNhapVien = giayNhapVien;
 	}
 
-	public NhanVien getNguoiLamThuTuc() {
+	public User getNguoiLamThuTuc() {
 		return nguoiLamThuTuc;
 	}
 
-	public void setNguoiLamThuTuc(NhanVien nguoiLamThuTuc) {
+	public void setNguoiLamThuTuc(User nguoiLamThuTuc) {
 		this.nguoiLamThuTuc = nguoiLamThuTuc;
 	}
 

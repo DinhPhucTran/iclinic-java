@@ -1,17 +1,39 @@
 package com.group4.cms.model;
 
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
+@Entity
+@Table(name = "benh_nhan")
 public class BenhNhan {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maBenhNhan;
+
+	@Column(name = "ten")
 	private String tenBenhNhan;
+
+	@Column(name = "gioi_tinh")
 	private String gioiTinh;
+
+	@Column(name = "ngay_sinh")
 	private Date ngaySinh;
+
+	@Column(name = "nghe_nghiep")
 	private String ngheNghiep;
+
+	@Column(name = "dia_chi")
 	private String diaChi;
+
+	@Column(name ="sdt")
 	private String soDienThoai;
+
+	@Column(name = "tien_su_benh")
 	private String tienSuBenh;
+
+	@Column(name = "ngay_tiep_nhan")
 	private Date ngayTiepNhan;
 
 	public int age() {

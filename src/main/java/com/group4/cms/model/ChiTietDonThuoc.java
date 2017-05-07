@@ -1,15 +1,49 @@
 package com.group4.cms.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "chi_tiet_don_thuoc")
 public class ChiTietDonThuoc {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maChiTiet;
-	private DonThuoc donThuoc;
+	
+	//private DonThuoc donThuoc;
+	
+	@ManyToOne
+	@JoinColumn(name = "thuoc_id")
 	private Thuoc thuoc;
+	
+	@Column(name = "don_gia")
 	private double donGia;
+	
+	@Column(name = "so_luong")
 	private int soLuong;
+	
+	@Column(name ="sang")
 	private int sang;
+	
+	@Column(name = "trua")
 	private int trua;
+	
+	@Column(name = "chieu")
 	private int chieu;
+	
+	@Column(name = "toi")
 	private int toi;
+	
+	@Column(name = "loi_dan")
 	private String loiDan;
 
 	public int getMaChiTiet() {
@@ -20,13 +54,13 @@ public class ChiTietDonThuoc {
 		this.maChiTiet = maChiTiet;
 	}
 
-	public DonThuoc getDonThuoc() {
+	/*public DonThuoc getDonThuoc() {
 		return donThuoc;
 	}
 
 	public void setDonThuoc(DonThuoc donThuoc) {
 		this.donThuoc = donThuoc;
-	}
+	}*/
 
 	public Thuoc getThuoc() {
 		return thuoc;

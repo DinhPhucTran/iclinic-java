@@ -2,16 +2,51 @@ package com.group4.cms.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "phieu_yeu_cau_dich_vu")
 public class PhieuYeuCauDichVu {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maPhieuYeuCauDichVu;
+	
+	@ManyToOne
+	@JoinColumn(name = "phieu_kham_id")
 	private PhieuKhamBenh phieuKham;
-	private NhanVien nhanVien;
+	
+	@ManyToOne
+	@JoinColumn(name = "nhan_vien_id")
+	private User nhanVien;
+	
+	@ManyToOne
+	@JoinColumn(name = "dich_vu_id")
 	private DichVu dichVu;
+	
+	@Column(name = "ngay_lap")
 	private Date ngayLap;
+	
+	@Column(name = "thoi_gian_thuc_hien")
 	private Date thoiGianThucHien;
+	
 	private double donGia;
+	
+	@Column(name = "chi_so")
 	private String chiSo;
+	
+	@Column(name = "ket_qua")
 	private String ketQua;
+	
+	@Column(name = "tinh_trang")
 	private boolean tinhTrangKham;
 
 	public int getMaPhieuYeuCauDichVu() {
@@ -30,11 +65,11 @@ public class PhieuYeuCauDichVu {
 		this.phieuKham = phieuKham;
 	}
 
-	public NhanVien getNhanVien() {
+	public User getNhanVien() {
 		return nhanVien;
 	}
 
-	public void setNhanVien(NhanVien nhanVien) {
+	public void setNhanVien(User nhanVien) {
 		this.nhanVien = nhanVien;
 	}
 

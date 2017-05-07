@@ -2,16 +2,53 @@ package com.group4.cms.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "giay_chuyen_vien")
 public class GiayChuyenVien {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maGiayChuyenVien;
+	
+	@ManyToOne
+	@JoinColumn(name = "phieu_kham_benh_id")
 	private PhieuKhamBenh phieuKhamBenh;
-	private NhanVien bacSi;
+	
+	@ManyToOne
+	@JoinColumn(name = "bac_si_id")
+	private User bacSi;
+	
+	@ManyToOne
+	@JoinColumn(name = "giay_nhap_vien_id")
 	private GiayNhapVien giayNhapVien;
+	
+	@Column(name = "ngay_chuyen")
 	private Date ngayChuyenVien;
+	
+	@Column(name = "chan_doan")
 	private String chanDoan;
+	
+	@Column(name = "tinh_trang")
 	private String tinhTrang;
+	
+	@Column(name = "ly_do")
 	private String lyDo;
+	
+	@Column(name = "benh_vien_den")
 	private String benhVienDen;
+	
+	@Column(name = "ghi_chu")
 	private String ghiChu;
 
 	public int getMaGiayChuyenVien() {
@@ -30,11 +67,11 @@ public class GiayChuyenVien {
 		this.phieuKhamBenh = phieuKhamBenh;
 	}
 
-	public NhanVien getBacSi() {
+	public User getBacSi() {
 		return bacSi;
 	}
 
-	public void setBacSi(NhanVien bacSi) {
+	public void setBacSi(User bacSi) {
 		this.bacSi = bacSi;
 	}
 

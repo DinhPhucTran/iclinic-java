@@ -2,19 +2,46 @@ package com.group4.cms.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "giay_nhap_vien")
 public class GiayNhapVien {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int maGiayNhapVien;
+	
+	@ManyToOne
+	@JoinColumn(name = "benh_nhan_id")
 	private BenhNhan benhNhan;
-	private NhanVien nhanVienTiepNhan;
+	
+	@ManyToOne
+	@JoinColumn(name = "nhan_vien_tiep_nhan_id")
+	private User nhanVienTiepNhan;
+	
+	@Column(name = "chan_doan")
 	private String chanDoan;
+	
+	@Column(name = "ngay_nhap_vien")
 	private Date ngayNhapVien;
+	
+	@Column(name = "ghi_chu")
 	private String ghiChu;
 
-	public NhanVien getNhanVienTiepNhan() {
+	public User getNhanVienTiepNhan() {
 		return nhanVienTiepNhan;
 	}
 
-	public void setNhanVienTiepNhan(NhanVien nhanVienTiepNhan) {
+	public void setNhanVienTiepNhan(User nhanVienTiepNhan) {
 		this.nhanVienTiepNhan = nhanVienTiepNhan;
 	}
 
