@@ -35,6 +35,14 @@ public class BenhNhan {
 
 	@Column(name = "ngay_tiep_nhan")
 	private Date ngayTiepNhan;
+	
+	@Transient
+	private int tuoi;
+	
+	public int getTuoi() {
+		tuoi = age();
+		return tuoi;
+	}
 
 	public int age() {
 		Calendar ngaySinhCalendar = Calendar.getInstance();

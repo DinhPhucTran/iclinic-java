@@ -62,7 +62,7 @@
 									<div class="clearfix"></div>
 								</div>
 								<div class="x_content">
-									<form name="benhNhan" action="benhnhan/luu" method="post"
+									<form name="benhNhan" action="benh-nhan/luu" method="post"
 										data-parsley-validate class="form-horizontal form-label-left">
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
