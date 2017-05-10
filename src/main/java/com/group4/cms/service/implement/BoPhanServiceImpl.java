@@ -16,7 +16,7 @@ public class BoPhanServiceImpl implements BoPhanService {
 	@Autowired
 	BoPhanDao bpDao;
 
-	@Override
+//	@Override
 	public List<BoPhan> findAll() {
 		List<BoPhan> result = new ArrayList<BoPhan>();
 		try{
@@ -27,7 +27,7 @@ public class BoPhanServiceImpl implements BoPhanService {
 		return result;
 	}
 
-	@Override
+//	@Override
 	public BoPhan save(BoPhan boPhan) {
 		try{
 			return bpDao.save(boPhan);
@@ -37,7 +37,7 @@ public class BoPhanServiceImpl implements BoPhanService {
 		return null;
 	}
 
-	@Override
+//	@Override
 	public void delete(int id) {
 		try{
 			bpDao.delete(id);
@@ -46,7 +46,7 @@ public class BoPhanServiceImpl implements BoPhanService {
 		}
 	}
 
-	@Override
+//	@Override
 	public BoPhan findById(int id) {
 		return bpDao.findOne(id);
 	}

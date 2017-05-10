@@ -13,7 +13,7 @@ public class StringToBoPhanConverter implements Converter<String, BoPhan>{
 	@Autowired
 	BoPhanService bpService;
 
-	@Override
+//	@Override
 	public BoPhan convert(String id) {
 		try{
 			return bpService.findById(Integer.parseInt(id));

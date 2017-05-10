@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 
-	@Override
+//	@Override
 	public User findById(Integer id) {
 		return userDao.findOne(id);
 	}
