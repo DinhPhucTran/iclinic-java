@@ -9,7 +9,7 @@ import com.group4.cms.dao.BenhNhanDao;
 import com.group4.cms.model.BenhNhan;
 import com.group4.cms.service.BenhNhanService;
 
-@Service("benhNhanService")
+@Service
 public class BenhNhanServiceImpl implements BenhNhanService {
 
 	@Autowired
@@ -25,9 +25,10 @@ public class BenhNhanServiceImpl implements BenhNhanService {
 	}
 
 	public void delete(int id) {
+		benhNhanDao.delete(id);
 	}
 
 	public BenhNhan findById(int id) {
-		return null;
+		return benhNhanDao.findOne(id);
 	}
 }
