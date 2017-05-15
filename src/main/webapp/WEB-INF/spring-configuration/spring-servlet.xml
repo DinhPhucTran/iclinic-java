@@ -18,6 +18,7 @@
 
 	<context:component-scan base-package="com.group4.cms." />
 	<mvc:resources location="/resources/" mapping="/resources/**" />
+        <mvc:resources location="/favicon.ico" mapping="/favicon.ico" />
 	<mvc:annotation-driven />
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

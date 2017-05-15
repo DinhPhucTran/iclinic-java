@@ -39,4 +39,14 @@ public class UserServiceImpl implements UserService{
 	public User findById(Integer id) {
 		return userDao.findOne(id);
 	}
+
+    @Override
+    public Integer getImageId(Integer userId) {
+        try{
+            return userDao.getImageId(userId);
+        } catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

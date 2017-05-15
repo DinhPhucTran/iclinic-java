@@ -11,4 +11,6 @@ public interface UserService {
 	public User save(User user);
 	
 	public User findById(Integer id);
+        
+        public Integer getImageId(Integer userId);
 }
