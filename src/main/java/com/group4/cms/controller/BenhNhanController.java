@@ -56,6 +56,7 @@ public class BenhNhanController {
 			System.out.println("error");
 		}
 		System.out.println("benhNhan.getMaBenhNhan(): " + benhNhan.getMaBenhNhan());
+		// TODO
 		return "redirect:/benh-nhan";
 	}
 }

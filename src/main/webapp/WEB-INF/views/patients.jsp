@@ -114,6 +114,7 @@
 							modelAttribute="benhNhan">
 							<div class="modal-body">
 								<div class="item form-group">
+									<h1>Nhập viện</h1>
 									<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
 										path="maBenhNhan" for="maBenhNhan">Mã bệnh nhân <span
 											class="required">*</span>
@@ -179,7 +180,6 @@
 		});
 		
 		function nhapVien(id, ten, tuoi) {
-			alert(id);
 			$("#del-id").val(id);
 			$("#del-ten").val(ten);
 		}
