@@ -13,7 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Clinic</title>
+<title>Danh sách người dùng | Clinic</title>
 
 <!-- Bootstrap -->
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
@@ -467,22 +467,16 @@
 				$(this).removeAttr("selected");
 			});
 			
-			$("#edit-boPhan option").each(function(){
-				$(this).removeAttr("selected");
-			});
-			
 			$("#edit-id").val(id);
 			$("#edit-fullName").val(fullName);
 			$("#edit-userName").val(userName);
-			$.each(roles, function(index, value){
-				$("#role-" + value).attr("selected", true);
-				$("#edit-roles").trigger("chosen:updated");
-			});
+                        
+                        $("#edit-roles").val(roles);
+			$("#edit-roles").trigger("chosen:updated");
+			$("#edit-bp").val(boPhan).change();
 			
-			$("edit-bp").val(boPhan);
-			
-			$("#img-preview").css("background-image", "url('resources/images/user.jpg')");
-			$("#edit-img-preview").css("background-image", "url('resources/images/user.jpg')");
+			//$("#img-preview").css("background-image", "url()");
+			$("#edit-img-preview").css("background-image", "url('/getImage?id=' + id)");
 			
 		}
 	</script>

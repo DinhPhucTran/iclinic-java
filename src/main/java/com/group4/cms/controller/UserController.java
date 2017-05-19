@@ -26,6 +26,12 @@ import com.group4.cms.service.FileService;
 import com.group4.cms.service.UserRoleService;
 import com.group4.cms.service.UserService;
 import com.group4.cms.util.Util;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserController {
@@ -163,5 +169,26 @@ public class UserController {
 		hashedPassword = passwordEncoder.encode(password);
 		return hashedPassword;
 	}
+        
+        @RequestMapping(value = "/getImage", method = RequestMethod.GET)
+        public void getImage(@RequestParam("id") int id, HttpServletResponse response){
+            //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            //int imgId = userService.getImageId(id);
+            //FileWrapper file = fileService.findById(imgId);
+            byte[] imgByte = fileService.getFileContent(2);
+            System.out.println(imgByte.length);
+//            byte[] imgByte = file.getContent().getBytes();
+            response.setContentType("image/jpeg");
+            //response.setHeader("Content-Length", String.valueOf(imgByte.length));
+            response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + id + ".jpg");
+//            
+            try {
+                //ServletOutputStream servletOutputStream = response.getOutputStream();
+                response.getOutputStream().write(imgByte);
+		response.getOutputStream().close();
+            } catch (IOException ex) {
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 	
 }

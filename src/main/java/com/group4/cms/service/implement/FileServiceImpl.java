@@ -21,4 +21,14 @@ public class FileServiceImpl implements FileService{
 		}
 		return null;
 	}
+
+    @Override
+    public FileWrapper findById(Integer id) {
+        return fileDao.findOne(id);
+    }
+
+    @Override
+    public byte[] getFileContent(Integer fileId) {
+        return fileDao.getFileContent(fileId);
+    }
 }
