@@ -17,7 +17,7 @@ public class DichVu {
 	private int maDichVu;
 	
 	@Column(name = "ten_dv")
-	private int tenDichVu;
+	private String tenDichVu;
 	
 	@Column(name = "don_gia")
 	private int donGia;
@@ -30,11 +30,11 @@ public class DichVu {
 		this.maDichVu = maDichVu;
 	}
 
-	public int getTenDichVu() {
+	public String getTenDichVu() {
 		return tenDichVu;
 	}
 
-	public void setTenDichVu(int tenDichVu) {
+	public void setTenDichVu(String tenDichVu) {
 		this.tenDichVu = tenDichVu;
 	}
 

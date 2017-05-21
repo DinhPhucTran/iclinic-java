@@ -66,6 +66,7 @@
                     <ul class="nav child_menu">
                       <li><a href="benh-nhan">Bệnh nhân - danh sách</a></li>
                       <li><a href="bo-phan">Bộ phận - Thêm, xoá, sửa</a></li>
+                       <li><a href="dich-vu">Dịch vụ - Thêm, xoá, sửa</a></li>
                     </ul>
                   </li>
                 </ul>
