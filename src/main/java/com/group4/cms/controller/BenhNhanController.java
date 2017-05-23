@@ -37,6 +37,7 @@ public class BenhNhanController {
 		return new BenhNhan();
 	}
 	
+	// TODO
 	@ModelAttribute("hoSoDieuTri")
 	public HoSoDieuTriNoiTru getHoSoDieuTri() {
 		return new HoSoDieuTriNoiTru();
@@ -76,8 +77,8 @@ public class BenhNhanController {
 		List<Phong> rooms = phongService.findByDichVu(1);
 		if (dsBenhNhan.isEmpty() || receptionists.isEmpty() || doctors.isEmpty() || nurses.isEmpty()
 				|| rooms.isEmpty()) {
-			model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
-			model.addAttribute("msgType", "error");
+			model.addAttribute("message", "Không có bệnh nhân nào cả.");
+			model.addAttribute("msgType", "success");
 			return "patients";
 		}
 		model.addAttribute("dsBenhNhan", dsBenhNhan);

@@ -33,8 +33,8 @@
                   <li><a><i class="fa fa-user"></i> Đón tiếp <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tiep-nhan">Tiếp nhận bệnh nhân</a></li>
-                      <li><a href="form_advanced.html">Thanh toán</a></li>
-                      <li><a href="form_validation.html">Danh sách bệnh nhân</a></li>
+                      <li><a href="">Thanh toán</a></li>
+                      <li><a href="benh-nhan">Danh sách bệnh nhân</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-stethoscope"></i> Khám bệnh <span class="fa fa-chevron-down"></span></a>
@@ -46,8 +46,7 @@
                   </li>
                   <li><a><i class="fa fa-heartbeat"></i> Điều trị <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                      <li><a href="benh-nhan-dieu-tri">Danh sách bệnh nhân</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Quản lý thuốc <span class="fa fa-chevron-down"></span></a>

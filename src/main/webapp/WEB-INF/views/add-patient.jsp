@@ -69,7 +69,7 @@
 										data-parsley-validate class="form-horizontal form-label-left">
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="name">Họ tên bệnh nhân <span class="required">*</span>
+												for="name">Họ tên bệnh nhân<span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="name" name="tenBenhNhan"
@@ -78,7 +78,7 @@
 										</div>
 										<div class="form-group">
 											<label class="control-label col-md-3 col-sm-3 col-xs-12"
-												for="dob">Ngày sinh <span class="required">*</span>
+												for="dob">Ngày sinh<span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
 												<input type="text" id="dob" name="ngaySinh"
@@ -92,10 +92,10 @@
 											<div class="col-md-6 col-sm-6 col-xs-12"
 												style="margin-top: 5px;">
 												<input type="radio" class="flat" name="gioiTinh"
-													id="genderM" value="M" checked="checked" required /> Nam <input
+													id="genderM" value="Nam" checked="checked" required /> Nam <input
 													type="radio" class="flat" name="gioiTinh" id="genderF"
-													value="F" /> Nữ <input type="radio" class="flat"
-													name="gioiTinh" id="genderO" value="O" /> Khác
+													value="Nữ" /> Nữ <input type="radio" class="flat"
+													name="gioiTinh" id="genderO" value="Khác" /> Khác
 											</div>
 										</div>
 										<div class="form-group">

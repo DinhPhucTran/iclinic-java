@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,11 +17,12 @@ import javax.persistence.Table;
 public class ChiTietDieuTri {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id_chi_tiet_dieu_tri")
 	private int maChiTietDieuTri;
 	
-	//@OneToOne
-	//private HoSoDieuTriNoiTru hoSoDieuTriNoiTru;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "id_ho_so")
+	private HoSoDieuTriNoiTru hoSoDieuTriNoiTru;
 	
 	@Column(name = "thoi_gian_dieu_tri")
 	private Date thoiGianDieuTri;
@@ -37,13 +41,13 @@ public class ChiTietDieuTri {
 		this.maChiTietDieuTri = maChiTietDieuTri;
 	}
 
-	/*public HoSoDieuTriNoiTru getHoSoDieuTriNoiTru() {
+	public HoSoDieuTriNoiTru getHoSoDieuTriNoiTru() {
 		return hoSoDieuTriNoiTru;
 	}
 
 	public void setHoSoDieuTriNoiTru(HoSoDieuTriNoiTru hoSoDieuTriNoiTru) {
 		this.hoSoDieuTriNoiTru = hoSoDieuTriNoiTru;
-	}*/
+	}
 
 	public Date getThoiGianDieuTri() {
 		return thoiGianDieuTri;

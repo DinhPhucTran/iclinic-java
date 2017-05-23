@@ -28,7 +28,7 @@ public class GiayRaVien {
 	
 	@ManyToOne
 	@JoinColumn(name = "nhan_vien_id")
-	private User nguoiLamThuTuc;
+	private User bacSiDeNghi;
 	
 	@Column(name = "chan_doan")
 	private String chanDoan;
@@ -60,12 +60,12 @@ public class GiayRaVien {
 		this.giayNhapVien = giayNhapVien;
 	}
 
-	public User getNguoiLamThuTuc() {
-		return nguoiLamThuTuc;
+	public User getBacSiDeNghi() {
+		return bacSiDeNghi;
 	}
 
-	public void setNguoiLamThuTuc(User nguoiLamThuTuc) {
-		this.nguoiLamThuTuc = nguoiLamThuTuc;
+	public void setBacSiDeNghi(User bacSiDeNghi) {
+		this.bacSiDeNghi = bacSiDeNghi;
 	}
 
 	public String getChanDoan() {

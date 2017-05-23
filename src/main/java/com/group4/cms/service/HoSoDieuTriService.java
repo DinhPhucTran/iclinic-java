@@ -13,4 +13,6 @@ public interface HoSoDieuTriService {
 	public void delete(int id);
 
 	public HoSoDieuTriNoiTru findById(int id);
+	
+	public List<HoSoDieuTriNoiTru> findByBeingTreated();
 }

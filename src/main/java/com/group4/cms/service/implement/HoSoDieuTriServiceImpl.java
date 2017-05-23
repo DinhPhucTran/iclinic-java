@@ -33,4 +33,9 @@ public class HoSoDieuTriServiceImpl implements HoSoDieuTriService{
 	public HoSoDieuTriNoiTru findById(int id) {
 		return hoSoDieutriDao.findOne(id);
 	}
+
+	@Override
+	public List<HoSoDieuTriNoiTru> findByBeingTreated() {
+		return hoSoDieutriDao.findByBeingTreated();
+	}
 }
