@@ -26,169 +26,168 @@ import com.group4.cms.service.FileService;
 import com.group4.cms.service.UserRoleService;
 import com.group4.cms.service.UserService;
 import com.group4.cms.util.Util;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	UserRoleService roleService;
-	
+
 	@Autowired
 	FileService fileService;
-	
+
 	@Autowired
 	BoPhanService boPhanService;
-	
+
 	@ModelAttribute("user")
-	public User getUser(){
+	public User getUser() {
 		return new User();
 	}
-	
+
 	@RequestMapping(value = "/user-list", method = RequestMethod.GET)
-	public String userList(Model model){
-		List<User> users = new ArrayList<User>();		
+	public String userList(Model model) {
+		List<User> users = new ArrayList<User>();
 		users = userService.findAll();
-		
+
 		List<UserRole> roles = new ArrayList<UserRole>();
 		roles = roleService.findAll();
-		
+
 		List<BoPhan> dsBoPhan = new ArrayList<BoPhan>();
 		dsBoPhan = boPhanService.findAll();
-		
+
 		model.addAttribute("userList", users);
 		model.addAttribute("roleList", roles);
 		model.addAttribute("dsBoPhan", dsBoPhan);
-		
-		return "user-list";		
+
+		return "user-list";
 	}
-	
+
 	@RequestMapping(value = "/add-user", method = RequestMethod.POST)
-	public String addUser(@ModelAttribute("user") @Valid User user, 
-			@RequestParam(value = "image1", required = false) CommonsMultipartFile image, 
-			BindingResult result,
-			RedirectAttributes redirectAttributes){
-		if(result.hasErrors()){
+	public String addUser(@ModelAttribute("user") @Valid User user,
+			@RequestParam(value = "image1", required = false) CommonsMultipartFile image, BindingResult result,
+			RedirectAttributes redirectAttributes) {
+		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			return "redirect:/user-list";
 		}
 		String pass = user.getPassword();
 		String hashed = encodePassword(pass);
-		if(!"".equals(hashed)){
+		if (!"".equals(hashed)) {
 			user.setPassword(hashed);
 		}
-		
+
 		user.setEnabled(true);
-		
+
 		FileWrapper file = new FileWrapper();
-		if(Util.isValidImageFile(image.getContentType())){
-			String name = "profile-img-" + user.getUserName() +  "." + Util.getFileExtension(image.getOriginalFilename());
+		if (Util.isValidImageFile(image.getContentType())) {
+			String name = "profile-img-" + user.getUserName() + "."
+					+ Util.getFileExtension(image.getOriginalFilename());
 			file.setName(name);
 			file.setContent(image);
 			fileService.save(file);
-			
+
 			user.setProfileImage(file);
 		}
-		
-		if(userService.save(user) != null){
+
+		if (userService.save(user) != null) {
 			redirectAttributes.addFlashAttribute("message", "Thêm người dùng thành công");
 			redirectAttributes.addFlashAttribute("msgType", "success");
 		} else {
 			redirectAttributes.addFlashAttribute("message", "Đã có lỗi xảy ra, vui lòng thử lại sau.");
 			redirectAttributes.addFlashAttribute("msgType", "error");
 		}
-		
+
 		return "redirect:/user-list";
 	}
-	
+
 	@RequestMapping(value = "/edit-user", method = RequestMethod.POST)
-	public String editUser(@ModelAttribute("user") @Valid User user, 
-			@RequestParam(value = "image1", required = false) CommonsMultipartFile image, 
-			BindingResult result,
-			RedirectAttributes redirectAttributes){
-		
-		if(result.hasErrors()){
+	public String editUser(@ModelAttribute("user") @Valid User user,
+			@RequestParam(value = "image1", required = false) CommonsMultipartFile image, BindingResult result,
+			RedirectAttributes redirectAttributes) {
+
+		if (result.hasErrors()) {
 			System.out.println(result.getAllErrors());
 			return "redirect:/user-list";
 		}
-		
+
 		User oldUser = userService.findById(user.getId());
-		if(oldUser != null)
+		if (oldUser != null)
 			System.out.println(oldUser.getId() + "/" + oldUser.getUserName());
-		else 
+		else
 			System.out.println("NULLLLLLLLll");
-		
-		if(user.getPassword() != null){
+
+		if (user.getPassword() != null) {
 			String pass = user.getPassword();
 			String hashed = encodePassword(pass);
-			if(!"".equals(hashed)){
+			if (!"".equals(hashed)) {
 				user.setPassword(hashed);
 			}
 		} else {
 			user.setPassword(oldUser.getPassword());
-		}		
-		
+		}
+
 		user.setEnabled(true);
-		
-		if(user.getProfileImage() != null){
+
+		if (user.getProfileImage() != null) {
 			FileWrapper file = new FileWrapper();
-			if(Util.isValidImageFile(image.getContentType())){
-				String name = "profile-img-" + user.getUserName() +  "." + Util.getFileExtension(image.getOriginalFilename());
+			if (Util.isValidImageFile(image.getContentType())) {
+				String name = "profile-img-" + user.getUserName() + "."
+						+ Util.getFileExtension(image.getOriginalFilename());
 				file.setName(name);
 				file.setContent(image);
 				fileService.save(file);
-				
+
 				user.setProfileImage(file);
 			}
-		} else if (oldUser.getProfileImage() != null){
+		} else if (oldUser.getProfileImage() != null) {
 			user.setProfileImage(oldUser.getProfileImage());
 		}
-		
-		if(userService.save(user) != null){
+
+		if (userService.save(user) != null) {
 			redirectAttributes.addFlashAttribute("message", "Cập nhật thông tin người dùng thành công");
 			redirectAttributes.addFlashAttribute("msgType", "success");
 		} else {
 			redirectAttributes.addFlashAttribute("message", "Đã có lỗi xảy ra, vui lòng thử lại sau.");
 			redirectAttributes.addFlashAttribute("msgType", "error");
 		}
-		
+
 		return "redirect:/user-list";
 	}
-	
-	private String encodePassword(String password){
+
+	private String encodePassword(String password) {
 		String hashedPassword = "";
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		hashedPassword = passwordEncoder.encode(password);
 		return hashedPassword;
 	}
-        
-        @RequestMapping(value = "/getImage", method = RequestMethod.GET)
-        public void getImage(@RequestParam("id") int id, HttpServletResponse response){
-            //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            //int imgId = userService.getImageId(id);
-            //FileWrapper file = fileService.findById(imgId);
-            byte[] imgByte = fileService.getFileContent(2);
-            System.out.println(imgByte.length);
-//            byte[] imgByte = file.getContent().getBytes();
-            response.setContentType("image/jpeg");
-            //response.setHeader("Content-Length", String.valueOf(imgByte.length));
-            response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + id + ".jpg");
-//            
-            try {
-                //ServletOutputStream servletOutputStream = response.getOutputStream();
-                response.getOutputStream().write(imgByte);
-		response.getOutputStream().close();
-            } catch (IOException ex) {
-                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-	
+
+	@RequestMapping(value = "/getImage", method = RequestMethod.GET)
+	public void getImage(@RequestParam("id") int id, HttpServletResponse response) {
+		// ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		// int imgId = userService.getImageId(id);
+		// FileWrapper file = fileService.findById(imgId);
+		byte[] imgByte = fileService.getFileContent(2);
+		System.out.println(imgByte.length);
+		// byte[] imgByte = file.getContent().getBytes();
+		response.setContentType("image/jpeg");
+		// response.setHeader("Content-Length", String.valueOf(imgByte.length));
+		response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + id + ".jpg");
+		//
+		try {
+			// ServletOutputStream servletOutputStream =
+			// response.getOutputStream();
+			response.getOutputStream().write(imgByte);
+			response.getOutputStream().close();
+		} catch (IOException ex) {
+			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
+
 }

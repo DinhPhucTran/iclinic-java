@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -21,6 +22,8 @@
 <!-- iCheck -->
 <link href="resources/plugin/iCheck/skins/flat/green.css"
 	rel="stylesheet">
+<link href="resources/plugin/pnotify/pnotify.custom.css" media="all"
+	rel="stylesheet" type="text/css" />
 <!-- Custom Theme Style -->
 <link href="resources/css/custom.css" rel="stylesheet">
 </head>
@@ -69,8 +72,8 @@
 												for="name">Họ tên bệnh nhân <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="name" name="tenBenhNhan" required="required"
-													class="form-control col-md-7 col-xs-12">
+												<input type="text" id="name" name="tenBenhNhan"
+													required="required" class="form-control col-md-7 col-xs-12">
 											</div>
 										</div>
 										<div class="form-group">
@@ -78,8 +81,8 @@
 												for="dob">Ngày sinh <span class="required">*</span>
 											</label>
 											<div class="col-md-6 col-sm-6 col-xs-12">
-												<input type="text" id="dob" name="ngaySinh" required="required"
-													class="form-control col-md-7 col-xs-12"
+												<input type="text" id="dob" name="ngaySinh"
+													required="required" class="form-control col-md-7 col-xs-12"
 													data-inputmask="'alias': 'date'">
 											</div>
 										</div>
@@ -88,11 +91,11 @@
 												tính</label>
 											<div class="col-md-6 col-sm-6 col-xs-12"
 												style="margin-top: 5px;">
-												<input type="radio" class="flat" name="gioiTinh" id="genderM"
-													value="M" checked="checked" required /> Nam <input
+												<input type="radio" class="flat" name="gioiTinh"
+													id="genderM" value="M" checked="checked" required /> Nam <input
 													type="radio" class="flat" name="gioiTinh" id="genderF"
 													value="F" /> Nữ <input type="radio" class="flat"
-													name="gender" id="genderO" value="O" /> Khác
+													name="gioiTinh" id="genderO" value="O" /> Khác
 											</div>
 										</div>
 										<div class="form-group">
@@ -168,5 +171,17 @@
 	<script src="resources/plugin/iCheck/icheck.min.js"></script>
 	<!-- Inputmask -->
 	<script src="resources/plugin/inputmask/jquery.inputmask.bundle.js"></script>
+	<script src="resources/plugin/pnotify/pnotify.custom.js"></script>
+	<c:if test="${not empty message}">
+		<script>
+			new PNotify({
+				title : 'Thông báo',
+				text : '${message}',
+				type : '${msgType}',
+				styling : 'bootstrap3',
+				delay : 2000
+			});
+		</script>
+	</c:if>
 </body>
 </html>

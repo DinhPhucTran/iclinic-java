@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 
-//	@Override
 	public User findById(Integer id) {
 		return userDao.findOne(id);
 	}
@@ -49,4 +48,10 @@ public class UserServiceImpl implements UserService{
             return 0;
         }
     }
+
+	@Override
+	public List<User> findByBoPhan(int boPhanId) {
+		List<User> result = userDao.findUsersByBoPhan(boPhanId);
+		return result;
+	}
 }

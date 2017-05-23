@@ -84,7 +84,7 @@
 													<button class="btn btn-info" data-toggle="modal"
 														data-target="#modal-dieu-tri"
 														onclick="nhapVien(${bn.maBenhNhan}, '${bn.tenBenhNhan}', '${bn.tuoi}')">
-														<i class="fa fa-pencil-square-o"></i>
+														<i class="fa fa-pencil-square-o">Nhập viện</i>
 													</button>
 												</td>
 											</tr>
@@ -95,56 +95,104 @@
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<!-- Modal tao ho so dieu tri -->
-			<div class="modal fade" id="modal-dieu-tri">
-				<div class="modal-dialog modal-sm">
-					<div class="modal-content">
+				<!-- Modal tao ho so dieu tri -->
+				<div class="modal fade" id="modal-dieu-tri">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
 
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal">
-								<span aria-hidden="true">×</span>
-							</button>
-							<h4 class="modal-title">Nhập viện</h4>
-						</div>
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+								<h4 class="modal-title">Nhập viện</h4>
+							</div>
 
-						<form:form class="form-horizontal form-label-left"
-							action="tao-ho-so-dieu-tri" method="POST"
-							modelAttribute="benhNhan">
-							<div class="modal-body">
-								<div class="item form-group">
-									<h1>Nhập viện</h1>
-									<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-										path="maBenhNhan" for="maBenhNhan">Mã bệnh nhân <span
-											class="required">*</span>
-									</form:label>
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<form:input class="form-control col-md-7 col-xs-12"
-											path="maBenhNhan" id="del-id" readonly="true" />
-									</div>
-								</div>
-								<div class="item form-group">
-									<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-										path="tenBenhNhan" for="tenBenhNhan">Tên bệnh nhân
+							<form:form class="form-horizontal form-label-left"
+								action="ho-so-dieu-tri" method="POST"
+								modelAttribute="hoSoDieuTri">
+								<div class="modal-body">
+									<div class="item form-group">
+										<h1>Nhập viện</h1>
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="benhNhan.maBenhNhan" for="del-id">Mã bệnh nhân <span
+												class="required">*</span>
 										</form:label>
-									<div class="col-md-6 col-sm-6 col-xs-12">
-										<form:input class="form-control col-md-7 col-xs-12"
-											path="tenBenhNhan" id="del-ten" readonly="true" />
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input class="form-control col-md-7 col-xs-12"
+												path="benhNhan.maBenhNhan" id="del-id" readonly="true" />
+										</div>
+									</div>
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="benhNhan.tenBenhNhan" for="tenBenhNhan">Tên bệnh nhân
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input class="form-control col-md-7 col-xs-12"
+												path="benhNhan.tenBenhNhan" id="del-ten" readonly="true" />
 
+										</div>
+									</div>
+									<!-- Nhan vien tiep nhan -> giay nhap vien -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="receptionists" path="giayNhapVien.nhanVienTiepNhan.id">Nhân viên tiếp nhận 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="receptionists" path="giayNhapVien.nhanVienTiepNhan.id">
+												<form:options items="${receptionists}" itemValue="id"
+													itemLabel="fullName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<!-- Bac si -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="doctors" path="bacSi.id">Bác sĩ điều trị 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="doctors" path="bacSi.id">
+												<form:options items="${doctors}" itemValue="id"
+													itemLabel="fullName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<!-- Y ta -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="nurses" path="yTa.id">Y tá điều trị 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="nurses" path="yTa.id">
+												<form:options items="${nurses}" itemValue="id"
+													itemLabel="fullName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<!-- Phong -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="rooms" path="phong.maPhong">Phòng 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="rooms" path="phong.maPhong">
+												<form:options items="${rooms}" itemValue="maPhong"
+													itemLabel="tenPhong"></form:options>
+											</form:select>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Hủy</button>
-								<button type="submit" class="btn btn-danger">Tạo</button>
-							</div>
-						</form:form>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Hủy</button>
+									<button type="submit" class="btn btn-danger">Nhập viện</button>
+								</div>
+							</form:form>
+						</div>
 					</div>
 				</div>
+				<!-- /end Modal tao ho so dieu tri -->
 			</div>
-			<!-- /end Modal tao ho so dieu tri -->
 
 		</div>
 		<!-- /page content -->

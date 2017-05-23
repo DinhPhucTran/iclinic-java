@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,15 +25,15 @@ public class HoSoDieuTriNoiTru {
 	private int maHoSo;
 	
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "benh_nhan_id")
 	private BenhNhan benhNhan;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bac_si_id")
 	private User bacSi;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "y_ta_id")
 	private User yTa;
 	
@@ -40,7 +41,7 @@ public class HoSoDieuTriNoiTru {
 	@JoinColumn(name = "phong_id")
 	private Phong phong;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	private GiayNhapVien giayNhapVien;
 	
 	@Column(name = "ngay_bat_dau")
