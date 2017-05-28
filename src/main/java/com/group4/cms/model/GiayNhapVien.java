@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "giay_nhap_vien")
@@ -36,6 +37,13 @@ public class GiayNhapVien {
 	
 	@Column(name = "ghi_chu")
 	private String ghiChu;
+	
+	@Transient
+	private String date;
+	
+	public String getDate() {
+		return String.valueOf(ngayNhapVien);
+	}
 
 	public User getNhanVienTiepNhan() {
 		return nhanVienTiepNhan;

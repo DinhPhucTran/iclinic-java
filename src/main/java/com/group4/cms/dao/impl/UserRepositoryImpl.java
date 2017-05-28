@@ -15,7 +15,6 @@ public class UserRepositoryImpl implements UserRepository{
 	private SessionFactory sessionFactory;
 	
 	@SuppressWarnings("unchecked")
-//	@Override
 	public User findByUserName(String username) {
 		List<User> users = new ArrayList<User>();
 		users = sessionFactory.getCurrentSession()

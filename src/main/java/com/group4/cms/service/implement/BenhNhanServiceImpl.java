@@ -16,8 +16,7 @@ public class BenhNhanServiceImpl implements BenhNhanService {
 	private BenhNhanDao benhNhanDao;
 	
 	public List<BenhNhan> findAll() {
-		List<BenhNhan> result = benhNhanDao.findAll();
-		return result;
+		return benhNhanDao.findAll();
 	}
 
 	public BenhNhan save(BenhNhan benhNhan) {

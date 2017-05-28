@@ -11,52 +11,56 @@ import com.group4.cms.model.User;
 import com.group4.cms.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Autowired
 	UserDao userDao;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		List<User> list = new ArrayList<User>();
-		try{
+		try {
 			list = userDao.findAll();
-		} catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-	
-	public User save(User user){
-		try{
+
+	public User save(User user) {
+		try {
 			return userDao.save(user);
-		} catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-//	@Override
 	public User findById(Integer id) {
 		return userDao.findOne(id);
 	}
 
-    @Override
-    public Integer getImageId(Integer userId) {
-        try{
-            return userDao.getImageId(userId);
-        } catch (Exception e){
-            e.printStackTrace();
-            return 0;
-        }
-    }
+	@Override
+	public Integer getImageId(Integer userId) {
+		try {
+			return userDao.getImageId(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	@Override
 	public Integer getProfileImageIdByUserName(String userName) {
 		try {
 			return userDao.getProfileImageIdByUserName(userName);
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	public List<User> findByBoPhan(int boPhanId) {
+		List<User> result = userDao.findUsersByBoPhan(boPhanId);
+		return result;
 	}
 }

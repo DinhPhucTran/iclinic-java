@@ -3,7 +3,7 @@
 <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-heart"></i> <span>Clinic</span></a>
+              <a href="${pageContext.request.contextPath}" class="site_title"><i class="fa fa-heart"></i> <span>Clinic</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -34,8 +34,8 @@
                   <li><a><i class="fa fa-user"></i> Đón tiếp <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="tiep-nhan">Tiếp nhận bệnh nhân</a></li>
-                      <li><a href="form_advanced.html">Thanh toán</a></li>
-                      <li><a href="form_validation.html">Danh sách bệnh nhân</a></li>
+                      <li><a href="">Thanh toán</a></li>
+                      <li><a href="benh-nhan">Danh sách bệnh nhân</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-stethoscope"></i> Khám bệnh <span class="fa fa-chevron-down"></span></a>
@@ -47,8 +47,7 @@
                   </li>
                   <li><a><i class="fa fa-heartbeat"></i> Điều trị <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                      <li><a href="benh-nhan-dieu-tri">Danh sách bệnh nhân</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Quản lý thuốc <span class="fa fa-chevron-down"></span></a>
@@ -67,6 +66,7 @@
                     <ul class="nav child_menu">
                       <li><a href="benh-nhan">Bệnh nhân - danh sách</a></li>
                       <li><a href="bo-phan">Bộ phận - Thêm, xoá, sửa</a></li>
+                       <li><a href="dich-vu">Dịch vụ - Thêm, xoá, sửa</a></li>
                     </ul>
                   </li>
                 </ul>

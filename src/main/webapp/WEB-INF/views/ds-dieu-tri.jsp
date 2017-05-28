@@ -2,33 +2,26 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Meta, title, CSS, favicons, etc. -->
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quản lý bệnh nhân | Clinic</title>
+<title>Điều trị | Clinic</title>
 
-<!-- Bootstrap -->
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
 <link href="resources/plugin/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-<!-- DataTables -->
 <link rel="stylesheet" type="text/css"
 	href="resources/plugin/datatables/datatables.min.css" />
-<!-- Chosen -->
 <link rel="stylesheet" type="text/css"
 	href="resources/plugin/chosen/chosen.css" />
-<link href="resources/plugin/pnotify/pnotify.custom.css" media="all"
-	rel="stylesheet" type="text/css" />
-<!-- Custom Theme Style -->
 <link href="resources/css/custom.css" rel="stylesheet">
 <link href="resources/css/style.css" rel="stylesheet">
+<link href="resources/plugin/pnotify/pnotify.custom.css" media="all"
+	rel="stylesheet" type="text/css" />
 
 </head>
 <body class="nav-md">
@@ -42,11 +35,17 @@
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
+					<div class="page-title">
+						<div class="title_left"></div>
+					</div>
+
+					<div class="clearfix"></div>
+
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Danh sách bệnh nhân</h2>
+									<h2>Danh sách bệnh nhân đang điều trị | Clinic</h2>
 									<div class="clearfix"></div>
 								</div>
 							</div>
@@ -58,26 +57,31 @@
 											<th>Họ tên</th>
 											<th>Giới tính</th>
 											<th>Tuổi</th>
-											<th>Số điện thoại</th>
-											<th>Tiền sử bệnh</th>
 											<th>Ngày tiếp nhận</th>
+											<th>Tình trạng gần đây</th>
+											<th>Số lần điều trị</th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${dsBenhNhan}" var="bn">
+										<c:forEach items="${dsHoSoDieuTri}" var="hoSo">
 											<tr>
-												<td>${bn.tenBenhNhan}</td>
-												<td>${bn.gioiTinh}</td>
-												<td>${bn.tuoi}</td>
-												<td>${bn.soDienThoai}</td>
-												<td>${bn.tienSuBenh}</td>
-												<td>${bn.ngayTiepNhan}</td>
+												<td>${hoSo.benhNhan.tenBenhNhan}</td>
+												<td>${hoSo.benhNhan.gioiTinh}</td>
+												<td>${hoSo.benhNhan.tuoi}</td>
+												<td>${hoSo.giayNhapVien.ngayNhapVien}</td>
+												<td>${hoSo.tinhTrangGanDay}</td>
+												<td>${hoSo.soLanDieuTri}</td>
 												<td>
 													<button class="btn btn-info" data-toggle="modal"
 														data-target="#modal-dieu-tri"
-														onclick="nhapVien(${bn.maBenhNhan}, '${bn.tenBenhNhan}', '${bn.tuoi}')">
-														<i class="fa fa-pencil-square-o">Nhập viện</i>
+														onclick="capNhat(${hoSo.maHoSo}, '${hoSo.benhNhan.tenBenhNhan}')">
+														<i class="fa fa-pencil-square-o">Điều trị</i>
+													</button>
+													<button class="btn btn-info" data-toggle="modal"
+														data-target="#modal-xuat-vien"
+														onclick="xuatVien(${hoSo.maHoSo}, '${hoSo.benhNhan.tenBenhNhan}')">
+														<i class="fa fa-pencil-square-o">Xuất viện</i>
 													</button>
 												</td>
 											</tr>
@@ -98,93 +102,104 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title">Nhập viện</h4>
+								<h4 class="modal-title">Điều trị</h4>
 							</div>
 
 							<form:form class="form-horizontal form-label-left"
-								action="ho-so-dieu-tri" method="POST"
-								modelAttribute="hoSoDieuTri">
+								action="cap-nhat-tinh-trang" method="POST"
+								modelAttribute="chiTietDieuTri">
 								<div class="modal-body">
 									<div class="item form-group">
-										<h1>Nhập viện</h1>
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											path="benhNhan.maBenhNhan" for="del-id">Mã bệnh nhân <span
+											path="hoSoDieuTriNoiTru.maHoSo" for="maHoSo">Hồ sơ số <span
 												class="required">*</span>
 										</form:label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<form:input class="form-control col-md-7 col-xs-12"
-												path="benhNhan.maBenhNhan" id="del-id" readonly="true" />
+												path="hoSoDieuTriNoiTru.maHoSo" id="maHoSo" readonly="true" />
 										</div>
 									</div>
 									<div class="item form-group">
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											path="benhNhan.tenBenhNhan" for="tenBenhNhan">Tên bệnh nhân
+											path="hoSoDieuTriNoiTru.benhNhan.tenBenhNhan"
+											for="tenBenhNhan">Tên bệnh nhân
 										</form:label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<form:input class="form-control col-md-7 col-xs-12"
-												path="benhNhan.tenBenhNhan" id="del-ten" readonly="true" />
+												path="hoSoDieuTriNoiTru.benhNhan.tenBenhNhan"
+												id="tenBenhNhan" readonly="true" />
 
 										</div>
 									</div>
-									<!-- Nhan vien tiep nhan -> giay nhap vien -->
+									<!-- dsChiTietDieuTri -->
 									<div class="item form-group">
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="receptionists" path="giayNhapVien.nhanVienTiepNhan.id">Nhân viên tiếp nhận 
-												</form:label>
+											path="tinhTrang" for="tinhTrang">Tinh trạng 
+										</form:label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<form:select class="form-control" id="receptionists" path="giayNhapVien.nhanVienTiepNhan.id">
-												<form:options items="${receptionists}" itemValue="id"
-													itemLabel="fullName"></form:options>
-											</form:select>
-										</div>
-									</div>
-									<!-- Bac si -->
-									<div class="item form-group">
-										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="doctors" path="bacSi.id">Bác sĩ điều trị 
-												</form:label>
-										<div class="col-md-6 col-sm-6 col-xs-12">
-											<form:select class="form-control" id="doctors" path="bacSi.id">
-												<form:options items="${doctors}" itemValue="id"
-													itemLabel="fullName"></form:options>
-											</form:select>
-										</div>
-									</div>
-									<!-- Y ta -->
-									<div class="item form-group">
-										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="nurses" path="yTa.id">Y tá điều trị 
-												</form:label>
-										<div class="col-md-6 col-sm-6 col-xs-12">
-											<form:select class="form-control" id="nurses" path="yTa.id">
-												<form:options items="${nurses}" itemValue="id"
-													itemLabel="fullName"></form:options>
-											</form:select>
-										</div>
-									</div>
-									<!-- Phong -->
-									<div class="item form-group">
-										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											for="rooms" path="phong.maPhong">Phòng 
-												</form:label>
-										<div class="col-md-6 col-sm-6 col-xs-12">
-											<form:select class="form-control" id="rooms" path="phong.maPhong">
-												<form:options items="${rooms}" itemValue="maPhong"
-													itemLabel="tenPhong"></form:options>
-											</form:select>
+											<form:input class="form-control col-md-7 col-xs-12"
+												path="tinhTrang" id="tinhTrang" />
 										</div>
 									</div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Hủy</button>
-									<button type="submit" class="btn btn-danger">Nhập viện</button>
+									<button type="submit" class="btn btn-danger">Xuất viện</button>
 								</div>
 							</form:form>
 						</div>
 					</div>
 				</div>
 				<!-- /end Modal tao ho so dieu tri -->
+				
+				<!-- Modal xuat vien -->
+				<div class="modal fade" id="modal-xuat-vien">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+								<h4 class="modal-title">Xuất viện</h4>
+							</div>
+							<form:form class="form-horizontal form-label-left"
+								action="xuat-vien" method="POST"
+								modelAttribute="hoSoDieuTri">
+								<div class="modal-body">
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="maHoSo" for="maHoSoXuatVien">Hồ sơ số <span
+												class="required">*</span>
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input class="form-control col-md-7 col-xs-12"
+												path="maHoSo" id="maHoSoXuatVien" readonly="true" />
+										</div>
+									</div>
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="benhNhan.tenBenhNhan"
+											for="tenBenhNhanXuatVien">Tên bệnh nhân
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input class="form-control col-md-7 col-xs-12"
+												path="benhNhan.tenBenhNhan"
+												id="tenBenhNhanXuatVien" readonly="true" />
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Hủy</button>
+									<button type="submit" class="btn btn-danger">Xuất viện</button>
+								</div>
+							</form:form>
+						</div>
+					</div>
+				</div>
+				<!-- /end Modal xuat vien -->
 			</div>
 
 		</div>
@@ -229,12 +244,16 @@
 					className : "btn-sm"
 				}, ]
 			});
-		});
-		
-		function nhapVien(id, ten, tuoi) {
-			$("#del-id").val(id);
-			$("#del-ten").val(ten);
+		});		
+		function capNhat(id, ten) {
+			$("#maHoSo").val(id);
+			$("#tenBenhNhan").val(ten);
+		}
+		function xuatVien(id, ten) {
+			$("#maHoSoXuatVien").val(id);
+			$("#tenBenhNhanXuatVien").val(ten);
 		}
 	</script>
 </body>
+
 </html>

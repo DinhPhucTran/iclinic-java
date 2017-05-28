@@ -1,5 +1,7 @@
 package com.group4.cms.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +16,7 @@ public interface UserDao extends JpaRepository<User, Integer>, UserRepository {
     
     @Query(value = "select image_id from user where username like :userName", nativeQuery = true)
     public Integer getProfileImageIdByUserName(@Param("userName") String userName);
+
+    @Query(value = "select * from user where bo_phan_id = :boPhanId", nativeQuery = true)
+	public List<User> findUsersByBoPhan(@Param("boPhanId") Integer boPhanId);
 }
