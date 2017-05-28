@@ -12,5 +12,7 @@ public interface UserService {
 	
 	public User findById(Integer id);
         
-        public Integer getImageId(Integer userId);
+    public Integer getImageId(Integer userId);
+    
+    public Integer getProfileImageIdByUserName(String userName);
 }

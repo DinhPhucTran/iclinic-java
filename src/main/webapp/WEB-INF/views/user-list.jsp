@@ -21,17 +21,18 @@
 <!-- Font Awesome -->
 <link href="resources/plugin/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet">
-	
+
 <!-- DataTables -->
 <link rel="stylesheet" type="text/css"
 	href="resources/plugin/datatables/datatables.min.css" />
-	
+
 <!-- Chosen -->
 <link rel="stylesheet" type="text/css"
 	href="resources/plugin/chosen/chosen.css" />
-		
+
 <!-- PNotify -->
-<link href="resources/plugin/pnotify/pnotify.custom.css" media="all" rel="stylesheet" type="text/css" />
+<link href="resources/plugin/pnotify/pnotify.custom.css" media="all"
+	rel="stylesheet" type="text/css" />
 
 <!-- Custom Theme Style -->
 <link href="resources/css/custom.css" rel="stylesheet">
@@ -89,14 +90,13 @@
 													<td>${user.userName}</td>
 													<td><c:forEach items="${user.roles}" var="role">${role.position} </c:forEach></td>
 													<td>${user.boPhan.tenBoPhan}</td>
-													<td><button class="btn btn-info" 
-																data-toggle="modal" data-target="#modal-edit-user"
-																onclick="editUser(${user.id}, '${user.fullName}', '${user.userName}', ${user.getRoleIdList()}, ${user.getBoPhanId()})">
+													<td><button class="btn btn-info" data-toggle="modal"
+															data-target="#modal-edit-user"
+															onclick="editUser(${user.id}, '${user.fullName}', '${user.userName}', ${user.getRoleIdList()}, ${user.getBoPhanId()})">
 															<i class="fa fa-pencil-square-o"></i>
 														</button>
-														<button class="btn btn-danger"
-																data-toggle="modal" data-target="#modal-delete-user"
-																onclick="deleteUser()">
+														<button class="btn btn-danger" data-toggle="modal"
+															data-target="#modal-delete-user" onclick="deleteUser()">
 															<i class="fa fa-trash-o"></i>
 														</button></td>
 												</tr>
@@ -129,7 +129,8 @@
 										<div class="col-md-4">
 											<div class="ava-container">
 												<div class="ava-image" id="img-preview">
-													<input type="file" name="image1" class="ava-input" id="img-upload" />
+													<input type="file" name="image1" class="ava-input"
+														id="img-upload" />
 												</div>
 												<div class="ava-middle" onclick="openFileDialog()"
 													title="Chọn ảnh đại diện">
@@ -175,8 +176,8 @@
 
 												</div>
 												<div class="col-md-2">
-													<button class="btn btn-success bt-gen-pass"
-														type="button" onclick="generatePassword()">
+													<button class="btn btn-success bt-gen-pass" type="button"
+														onclick="generatePassword()">
 														<i class="fa fa-random" title="Tạo mật khẩu"></i>
 													</button>
 												</div>
@@ -198,14 +199,13 @@
 
 											<div class="form-group">
 												<form:label
-													class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="bp" path="boPhan">Bộ phận </form:label>
+													class="control-label col-md-3 col-sm-3 col-xs-12" for="bp"
+													path="boPhan">Bộ phận </form:label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:select class="form-control" id="bp"
-														path="boPhan">
+													<form:select class="form-control" id="bp" path="boPhan">
 														<option value="0">--Chọn bộ phận--</option>
-														<form:options items="${dsBoPhan}"
-															itemValue="id" itemLabel="tenBoPhan"></form:options>
+														<form:options items="${dsBoPhan}" itemValue="id"
+															itemLabel="tenBoPhan"></form:options>
 													</form:select>
 												</div>
 											</div>
@@ -223,7 +223,7 @@
 					</div>
 				</div>
 				<!-- /end Modal Add user -->
-				
+
 				<!-- Modal Edit user -->
 				<div class="modal fade" id="modal-edit-user">
 					<div class="modal-dialog modal-lg">
@@ -240,12 +240,13 @@
 								action="edit-user" method="POST" modelAttribute="user"
 								enctype="multipart/form-data">
 								<div class="modal-body">
-									<form:input type="hidden" id="edit-id" path="id"/>
+									<form:input type="hidden" id="edit-id" path="id" />
 									<div class="row">
 										<div class="col-md-4">
 											<div class="ava-container">
 												<div class="ava-image" id="edit-img-preview">
-													<input type="file" name="image1" class="ava-input" id="edit-img-upload" />
+													<input type="file" name="image1" class="ava-input"
+														id="edit-img-upload" />
 												</div>
 												<div class="ava-middle" onclick="openFileDialog2()"
 													title="Chọn ảnh đại diện">
@@ -263,11 +264,12 @@
 														class="required">*</span>
 												</form:label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:input type="text" id="edit-fullName" required="required"
+													<form:input type="text" id="edit-fullName"
+														required="required"
 														class="form-control col-md-7 col-xs-12" path="fullName"></form:input>
 												</div>
 											</div>
-											
+
 											<div class="item form-group">
 												<form:label
 													class="control-label col-md-3 col-sm-3 col-xs-12"
@@ -275,7 +277,8 @@
 														class="required">*</span>
 												</form:label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:input type="text" id="edit-userName" required="required"
+													<form:input type="text" id="edit-userName"
+														required="required"
 														class="form-control col-md-7 col-xs-12" path="userName"></form:input>
 												</div>
 											</div>
@@ -304,8 +307,8 @@
 													for="roles" path="roles">Chức vụ 
 												</form:label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
-													<form:select class="form-control" id="edit-roles" path="roles"
-														multiple="true">
+													<form:select class="form-control" id="edit-roles"
+														path="roles" multiple="true">
 														<c:if test="${not empty roleList}">
 															<c:forEach items="${roleList}" var="role">
 																<option value="${role.id}" id="role-${role.id}">${role.position}</option>
@@ -319,14 +322,14 @@
 
 											<div class="form-group">
 												<form:label
-													class="control-label col-md-3 col-sm-3 col-xs-12"
-													for="bp" path="boPhan">Bộ phận </form:label>
+													class="control-label col-md-3 col-sm-3 col-xs-12" for="bp"
+													path="boPhan">Bộ phận </form:label>
 												<div class="col-md-6 col-sm-6 col-xs-12">
 													<form:select class="form-control" id="edit-bp"
 														path="boPhan">
 														<option value="0">--Chọn bộ phận--</option>
-														<form:options items="${dsBoPhan}"
-															itemValue="id" itemLabel="tenBoPhan"></form:options>
+														<form:options items="${dsBoPhan}" itemValue="id"
+															itemLabel="tenBoPhan"></form:options>
 													</form:select>
 												</div>
 											</div>
@@ -344,7 +347,7 @@
 					</div>
 				</div>
 				<!-- /end Modal Edit user -->
-				
+
 				<!-- Modal Delete User -->
 				<div class="modal fade" id="modal-delete-user">
 					<div class="modal-dialog modal-sm">
@@ -361,8 +364,8 @@
 								action="delete-user" method="POST" modelAttribute="user">
 								<div class="modal-body">
 									<p id="del-noti"></p>
-									<form:hidden path="id" id="del-id"/>
-									<form:hidden path="userName" id="del-username"/>
+									<form:hidden path="id" id="del-id" />
+									<form:hidden path="userName" id="del-username" />
 								</div>
 
 								<div class="modal-footer">
@@ -394,7 +397,7 @@
 	<script src="resources/plugin/chosen/chosen.jquery.js"></script>
 
 	<script src="resources/js/jquery.uploadPreview.js"></script>
-	
+
 	<script src="resources/plugin/pnotify/pnotify.custom.js"></script>
 
 	<script>
@@ -476,7 +479,8 @@
 			$("#edit-bp").val(boPhan).change();
 			
 			//$("#img-preview").css("background-image", "url()");
-			$("#edit-img-preview").css("background-image", "url('/getImage?id=' + id)");
+			$("#edit-img-preview").css("background-image", "url('${pageContext.request.contextPath}/getProfileImage?id=" + id + "')");
+			console.log("url('${pageContext.request.contextPath}/getProfileImage?id=" + id + "')");
 			
 		}
 	</script>

@@ -93,9 +93,12 @@ public class UserController {
 			String name = "profile-img-" + user.getUserName() +  "." + Util.getFileExtension(image.getOriginalFilename());
 			file.setName(name);
 			file.setContent(image);
+			System.out.println(image.getBytes().length);
 			fileService.save(file);
 			
 			user.setProfileImage(file);
+			FileWrapper wrapper = fileService.findById(file.getId());
+			System.out.println(wrapper.getName() + "/" + wrapper.getContent().getContentType() + "/" + wrapper.getContent().getSize());
 		}
 		
 		if(userService.save(user) != null){
@@ -138,7 +141,7 @@ public class UserController {
 		
 		user.setEnabled(true);
 		
-		if(user.getProfileImage() != null){
+		if(image != null){
 			FileWrapper file = new FileWrapper();
 			if(Util.isValidImageFile(image.getContentType())){
 				String name = "profile-img-" + user.getUserName() +  "." + Util.getFileExtension(image.getOriginalFilename());
@@ -148,8 +151,11 @@ public class UserController {
 				
 				user.setProfileImage(file);
 			}
+			System.out.println("profile image id: " + user.getProfileImage().getName());
+			
 		} else if (oldUser.getProfileImage() != null){
 			user.setProfileImage(oldUser.getProfileImage());
+			System.out.println("old profile image id: " + user.getProfileImage().getName());
 		}
 		
 		if(userService.save(user) != null){
@@ -170,22 +176,39 @@ public class UserController {
 		return hashedPassword;
 	}
         
-        @RequestMapping(value = "/getImage", method = RequestMethod.GET)
+        @RequestMapping(value = "/getProfileImage", method = RequestMethod.GET)
         public void getImage(@RequestParam("id") int id, HttpServletResponse response){
             //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            //int imgId = userService.getImageId(id);
-            //FileWrapper file = fileService.findById(imgId);
-            byte[] imgByte = fileService.getFileContent(2);
-            System.out.println(imgByte.length);
-//            byte[] imgByte = file.getContent().getBytes();
-            response.setContentType("image/jpeg");
+            int imgId = userService.getImageId(id);
+            FileWrapper file = fileService.findById(imgId);
+            System.out.println(file.getName() + "/" + file.getContent().getContentType() + "/" + file.getContent().getSize());
+            //byte[] imgByte = fileService.getFileContent(2);
+            byte[] imgByte = file.getContent().getBytes();
+            response.setContentType("image/jpeg, image/jpg, image/png");
             //response.setHeader("Content-Length", String.valueOf(imgByte.length));
             response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + id + ".jpg");
 //            
             try {
                 //ServletOutputStream servletOutputStream = response.getOutputStream();
                 response.getOutputStream().write(imgByte);
-		response.getOutputStream().close();
+                response.getOutputStream().close();
+            } catch (IOException ex) {
+                Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        @RequestMapping(value = "/getProfileImageByUserName", method = RequestMethod.GET)
+        public void getImageByUserName(@RequestParam("username") String userName, HttpServletResponse response){
+            int imgId = userService.getProfileImageIdByUserName(userName);
+            FileWrapper file = fileService.findById(imgId);
+            System.out.println(file.getName() + "/" + file.getContent().getContentType() + "/" + file.getContent().getSize());
+            byte[] imgByte = file.getContent().getBytes();
+            response.setContentType("image/jpeg, image/jpg, image/png");
+            response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + userName + ".jpg");
+            
+            try {
+                response.getOutputStream().write(imgByte);
+                response.getOutputStream().close();
             } catch (IOException ex) {
                 Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -11,11 +11,12 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="resources/images/img.png" alt="..." class="img-circle profile_img">
+                <img src="getProfileImageByUserName?username=${username}" alt="..." class="img-circle profile_img" 
+                	onerror="this.src='resources/images/user.jpg';">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>${username}</h2>
               </div>
               <div class="clearfix"></div>
             </div>

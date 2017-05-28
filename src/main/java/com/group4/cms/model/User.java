@@ -13,9 +13,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @Table(name = "user")
+@Transactional
 public class User {
 	
 	@Id
@@ -42,7 +47,8 @@ public class User {
 	@JoinColumn(name = "bo_phan_id")
 	private BoPhan boPhan;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne()
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "image_id")
 	private FileWrapper profileImage;
 

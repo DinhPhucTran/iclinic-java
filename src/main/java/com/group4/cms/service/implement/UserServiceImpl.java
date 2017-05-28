@@ -49,4 +49,14 @@ public class UserServiceImpl implements UserService{
             return 0;
         }
     }
+
+	@Override
+	public Integer getProfileImageIdByUserName(String userName) {
+		try {
+			return userDao.getProfileImageIdByUserName(userName);
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }
