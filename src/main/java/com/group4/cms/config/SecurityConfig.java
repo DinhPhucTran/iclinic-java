@@ -21,10 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Qualifier("userDetailsService")
 	UserDetailsService userDetailsService;
 	
-	@Autowired
+	/*@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	}
+	}*/
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -43,11 +43,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    http.csrf().disable();
 	}
 
-	@Bean
+	/*@Bean
 	public PasswordEncoder passwordEncoder(){
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		return encoder;
-	}
+	}*/
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {

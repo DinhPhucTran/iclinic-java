@@ -77,11 +77,12 @@ public class UserController {
 			System.out.println(result.getAllErrors());
 			return "redirect:/user-list";
 		}
-		String pass = user.getPassword();
+		
+		/*String pass = user.getPassword();
 		String hashed = encodePassword(pass);
 		if (!"".equals(hashed)) {
 			user.setPassword(hashed);
-		}
+		}*/
 
 		user.setEnabled(true);
 
@@ -127,13 +128,16 @@ public class UserController {
 		else
 			System.out.println("NULLLLLLLLll");
 
-		if (user.getPassword() != null) {
+		/*if (user.getPassword() != null) {
 			String pass = user.getPassword();
 			String hashed = encodePassword(pass);
 			if (!"".equals(hashed)) {
 				user.setPassword(hashed);
 			}
 		} else {
+			user.setPassword(oldUser.getPassword());
+		}*/
+		if(user.getPassword() == null) {
 			user.setPassword(oldUser.getPassword());
 		}
 
@@ -198,19 +202,17 @@ public class UserController {
 
 	@RequestMapping(value = "/getProfileImageByUserName", method = RequestMethod.GET)
 	public void getImageByUserName(@RequestParam("username") String userName, HttpServletResponse response) {
-		int imgId = userService.getProfileImageIdByUserName(userName);
-		FileWrapper file = fileService.findById(imgId);
-		System.out
-				.println(file.getName() + "/" + file.getContent().getContentType() + "/" + file.getContent().getSize());
-		byte[] imgByte = file.getContent().getBytes();
-		response.setContentType("image/jpeg, image/jpg, image/png");
-		response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + userName + ".jpg");
-
 		try {
+			int imgId = userService.getProfileImageIdByUserName(userName);
+			FileWrapper file = fileService.findById(imgId);
+			byte[] imgByte = file.getContent().getBytes();
+			response.setContentType("image/jpeg, image/jpg, image/png");
+			response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + userName + ".jpg");
+
 			response.getOutputStream().write(imgByte);
 			response.getOutputStream().close();
-		} catch (IOException ex) {
-			Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

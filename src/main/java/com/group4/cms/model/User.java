@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.transaction.Transactional;
 
@@ -40,7 +41,7 @@ public class User {
 	@Column(name = "full_name")
 	private String fullName;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<UserRole> roles;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
