@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -45,6 +46,9 @@ public class UserController {
 
 	@Autowired
 	BoPhanService boPhanService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@ModelAttribute("user")
 	public User getUser() {
@@ -83,6 +87,7 @@ public class UserController {
 		if (!"".equals(hashed)) {
 			user.setPassword(hashed);
 		}*/
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		user.setEnabled(true);
 
