@@ -25,7 +25,7 @@ public class CustomUserDetailService implements UserDetailsService{
 	UserDao userDao;
 
 	@Transactional(readOnly=true)
-//	@Override
+	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		com.group4.cms.model.User user = userDao.findByUserName(username);
 		

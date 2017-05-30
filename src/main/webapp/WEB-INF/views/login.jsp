@@ -21,44 +21,53 @@
 <link href="resources/css/custom.css" rel="stylesheet">
 </head>
 <body class="login">
-    <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
+	<div class="login_wrapper">
+		<div class="animate form login_form">
+			<section class="login_content">
+				<form action="login" method="POST">
+					<h1>Login</h1>
+					<div>
+						<input type="text" class="form-control" placeholder="Username"
+							required name="username" />
+					</div>
+					<div>
+						<input type="password" class="form-control" placeholder="Password"
+							required name="password" />
+					</div>
+					<div>
+						<input type="hidden" name="${_csrf.parameterName}"
+							value="${_csrf.token}" />
+					</div>
+					<div>
+						<button class="btn btn-default submit" type="submit">Log
+							in</Button>
+					</div>
 
-      <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="login_content">
-            <form action="login" method="POST">
-              <h1>Đăng nhập</h1>
-              
-              <div>
-                <input type="text" name="username" class="form-control" placeholder="Username" required/>
-              </div>
-              <div>
-                <input type="password" name="password" class="form-control" placeholder="Password" required/>
-              </div>
-              <input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
-              <div>
-                <input class="btn btn-default" type="submit" value="Log in">
-              </div>
+					<div class="clearfix"></div>
+					
+					<c:if test="${not empty msg}">
+						<p class="msg">${msg}</p>
+					</c:if>
+					
+					<c:if test="${not empty error}">
+						<p class="msg">${error}</p>
+					</c:if>
 
-              <div class="clearfix"></div>
+					<div class="separator">
 
-              <div class="separator">
+						<div class="clearfix"></div>
+						<br />
 
-                <div class="clearfix"></div>
-                <br />
-
-                <div>
-                  <h1><i class="fa fa-heart"></i> CMS </h1>
-                  <p>©2016 Group 4. All Rights Reserved.</p>
-                </div>
-              </div>
-            </form>
-          </section>
-        </div>
-
-      </div>
-    </div>
-  </body>
+						<div>
+							<h1>
+								<i class="fa fa-heart"></i> Clinic Management System
+							</h1>
+							<p>©2017 Group 4.</p>
+						</div>
+					</div>
+				</form>
+			</section>
+		</div>
+	</div>	
+</body>
 </html>
