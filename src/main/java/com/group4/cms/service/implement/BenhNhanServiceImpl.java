@@ -30,4 +30,24 @@ public class BenhNhanServiceImpl implements BenhNhanService {
 	public BenhNhan findById(int id) {
 		return benhNhanDao.findOne(id);
 	}
+
+	@Override
+	public Integer countBenhNhan() {
+		try{
+			return benhNhanDao.countBenhNhan();
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public Integer countBenhNhanMoi() {
+		try {
+			return benhNhanDao.countBenhNhanMoi();
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }

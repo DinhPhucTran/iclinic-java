@@ -63,4 +63,34 @@ public class UserServiceImpl implements UserService {
 		List<User> result = userDao.findUsersByBoPhan(boPhanId);
 		return result;
 	}
+
+	@Override
+	public Integer countUser() {
+		try {
+			return userDao.countUser();
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public Integer countBacSi() {
+		try{
+			return userDao.countBacSi();
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	@Override
+	public Integer countYta() {
+		try {
+			return userDao.counYta();
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
 }

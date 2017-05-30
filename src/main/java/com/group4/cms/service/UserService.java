@@ -17,4 +17,10 @@ public interface UserService {
     public Integer getProfileImageIdByUserName(String userName);
 	
 	public List<User> findByBoPhan(int boPhanId);
+	
+	public Integer countUser();
+	
+	public Integer countBacSi();
+	
+	public Integer countYta();
 }

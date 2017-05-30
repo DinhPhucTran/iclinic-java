@@ -19,4 +19,13 @@ public interface UserDao extends JpaRepository<User, Integer>, UserRepository {
 
     @Query(value = "select * from user where bo_phan_id = :boPhanId", nativeQuery = true)
 	public List<User> findUsersByBoPhan(@Param("boPhanId") Integer boPhanId);
+    
+    @Query(value = "select count(*) from user", nativeQuery = true)
+    public Integer countUser();
+    
+    @Query(value = "select count(*) from user_user_roles where roles_id = 2", nativeQuery = true)
+    public Integer countBacSi();
+    
+    @Query(value = "select count(*) from user_user_roles where roles_id = 3", nativeQuery = true)
+    public Integer counYta();
 }

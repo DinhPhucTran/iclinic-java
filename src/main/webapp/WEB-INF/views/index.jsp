@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page isELIgnored="false"%>
 
 <!DOCTYPE html>
@@ -16,12 +16,17 @@
 <title>Clinic</title>
 
 <!-- Bootstrap -->
-<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- Font Awesome -->
-<link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css"
+	rel="stylesheet">
 
 <!-- Custom Theme Style -->
-<link href="${pageContext.request.contextPath}/resources/css/custom.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/custom.css"
+	rel="stylesheet">
 </head>
 <body class="nav-md">
 	<div class="container body">
@@ -34,23 +39,41 @@
 			<!-- page content -->
 			<div class="right_col" role="main">
 				<div class="">
-					<div class="page-title">
-						<div class="title_left">
-							<h3>Clinic Management System</h3>
+					<div class="row tile_count">
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-users"></i> Tổng bệnh nhân</span>
+							<div class="count">${countBN}</div>
+						</div>
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-user-plus"></i> Bệnh nhân mới</span>
+							<div class="count green">${BNmoi}</div>
+						</div>
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-clock-o"></i> Lượt khám trong ngày</span>
+							<div class="count green">0</div>
+						</div>
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-calendar"></i> Lượt khám trong tháng</span>
+							<div class="count green">0</div>
 						</div>
 					</div>
-
-					<div class="clearfix"></div>
-
-					<div class="row">
-						<div class="col-md-12 col-sm-12 col-xs-12">
-							<div class="x_panel">
-								<div class="x_title">
-									<h2>Home</h2>
-									<div class="clearfix"></div>
-								</div>
-								<div class="x_content">Add content to the page ...</div>
-							</div>
+					
+					<div class="row tile_count">
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-user"></i> Tổng số nhân viên</span>
+							<div class="count">${countUser}</div>
+						</div>
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-user-md"></i> Bác sĩ</span>
+							<div class="count green">${countBS}</div>
+						</div>
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-user-md"></i> Y tá</span>
+							<div class="count green">${countYT}</div>
+						</div>
+						<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+							<span class="count_top"><i class="fa fa-user"></i> Nhân viên khác</span>
+							<div class="count green">${countOthers}</div>
 						</div>
 					</div>
 				</div>
