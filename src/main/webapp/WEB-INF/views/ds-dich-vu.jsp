@@ -58,7 +58,8 @@
 									<h2>Danh sách Dịch vụ</h2>
 									<div class="navbar-right">
 										<button class="btn btn-primary" data-toggle="modal"
-											data-target="#modal-them-dv"> Thêm dịch vụ
+											data-target="#modal-them-dv">
+											<i class="fa fa-plus" aria-hidden="true"></i> Thêm dịch vụ
 										</button>
 									</div>
 									<div class="clearfix"></div>
