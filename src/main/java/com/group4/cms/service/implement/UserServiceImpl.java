@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Integer countUser() {
+	public int countUser() {
 		try {
 			return userDao.countUser();
 		} catch (Exception e){
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Integer countBacSi() {
+	public int countBacSi() {
 		try{
 			return userDao.countBacSi();
 		} catch (Exception e){
@@ -85,12 +85,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Integer countYta() {
+	public int countYta() {
 		try {
 			return userDao.counYta();
 		} catch (Exception e){
 			e.printStackTrace();
 			return 0;
+		}
+	}
+
+	@Override
+	public void delete(int id) {
+		try{
+			userDao.delete(id);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

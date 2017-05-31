@@ -18,9 +18,11 @@ public interface UserService {
 	
 	public List<User> findByBoPhan(int boPhanId);
 	
-	public Integer countUser();
+	public int countUser();
 	
-	public Integer countBacSi();
+	public int countBacSi();
 	
-	public Integer countYta();
+	public int countYta();
+
+	public void delete(int id);
 }

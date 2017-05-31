@@ -17,7 +17,7 @@ public interface BenhNhanService {
 	
 	public BenhNhan findById(int id);
 	
-	public Integer countBenhNhan();
+	public int countBenhNhan();
 	
-	public Integer countBenhNhanMoi();
+	public int countBenhNhanMoi();
 }

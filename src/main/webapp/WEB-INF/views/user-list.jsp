@@ -96,7 +96,7 @@
 															<i class="fa fa-pencil-square-o"></i>
 														</button>
 														<button class="btn btn-danger" data-toggle="modal"
-															data-target="#modal-delete-user" onclick="deleteUser()">
+															data-target="#modal-delete-user" onclick="deleteUser(${user.id}, '${user.userName}')">
 															<i class="fa fa-trash-o"></i>
 														</button></td>
 												</tr>
@@ -480,8 +480,13 @@
 			
 			//$("#img-preview").css("background-image", "url()");
 			$("#edit-img-preview").css("background-image", "url('${pageContext.request.contextPath}/getProfileImage?id=" + id + "')");
-			console.log("url('${pageContext.request.contextPath}/getProfileImage?id=" + id + "')");
-			
+			//console.log("url('${pageContext.request.contextPath}/getProfileImage?id=" + id + "')");	
+		}
+		
+		function deleteUser(id, username){
+			$("#del-noti").html("Bạn có chắc chắn muốn xóa người dùng <big>" + username + "<big>");
+			$("#del-id").val(id);
+			$("#del-ten").val(username);
 		}
 	</script>
 	<c:if test="${ not empty message }">

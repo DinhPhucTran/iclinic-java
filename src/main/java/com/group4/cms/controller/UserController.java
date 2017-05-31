@@ -175,12 +175,12 @@ public class UserController {
 		return "redirect:/user-list";
 	}
 
-	private String encodePassword(String password) {
+	/*private String encodePassword(String password) {
 		String hashedPassword = "";
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		hashedPassword = passwordEncoder.encode(password);
 		return hashedPassword;
-	}
+	}*/
 
 	@RequestMapping(value = "/getProfileImage", method = RequestMethod.GET)
 	public void getImage(@RequestParam("id") int id, HttpServletResponse response) {
@@ -217,7 +217,27 @@ public class UserController {
 			response.getOutputStream().write(imgByte);
 			response.getOutputStream().close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value = "/delete-user", method = RequestMethod.POST)
+	public String deleteUser(@ModelAttribute("user") @Valid User user, BindingResult result, Model model,
+			RedirectAttributes redirectAttributes){
+		if(result.hasErrors()){
+			redirectAttributes.addFlashAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+			redirectAttributes.addFlashAttribute("msgType", "error");
+		} else {
+			try{
+				userService.delete(user.getId());
+				redirectAttributes.addFlashAttribute("message", "Đã xóa người dùng " + user.getUserName());
+				redirectAttributes.addFlashAttribute("msgType", "success");
+			} catch (Exception e) {
+				redirectAttributes.addFlashAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");		
+				redirectAttributes.addFlashAttribute("msgType", "error");
+			}			
+		}
+		
+		return "redirect:/user-list";
 	}
 }

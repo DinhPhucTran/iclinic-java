@@ -32,7 +32,7 @@ public class BenhNhanServiceImpl implements BenhNhanService {
 	}
 
 	@Override
-	public Integer countBenhNhan() {
+	public int countBenhNhan() {
 		try{
 			return benhNhanDao.countBenhNhan();
 		} catch (Exception e){
@@ -42,11 +42,11 @@ public class BenhNhanServiceImpl implements BenhNhanService {
 	}
 
 	@Override
-	public Integer countBenhNhanMoi() {
+	public int countBenhNhanMoi() {
 		try {
 			return benhNhanDao.countBenhNhanMoi();
 		} catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			return 0;
 		}
 	}
