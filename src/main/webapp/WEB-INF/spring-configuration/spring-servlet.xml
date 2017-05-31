@@ -69,6 +69,8 @@
 				<bean class="com.group4.cms.util.StringToUserRoleConverter"></bean>
 				<bean class="com.group4.cms.util.StringArrayToUserRoleListConverter"></bean>
 				<bean class="com.group4.cms.util.StringToBoPhanConverter"></bean>
+				<bean class="com.group4.cms.util.StringToBenhNhanConverter"></bean>
+				<bean class="com.group4.cms.util.StringToUserConverter"></bean>
 			</list>
 		</property>
 	</bean>

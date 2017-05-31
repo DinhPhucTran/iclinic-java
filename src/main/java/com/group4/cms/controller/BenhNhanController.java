@@ -1,5 +1,6 @@
 package com.group4.cms.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group4.cms.model.BenhNhan;
 import com.group4.cms.model.HoSoDieuTriNoiTru;
+import com.group4.cms.model.PhieuKhamBenh;
 import com.group4.cms.model.Phong;
 import com.group4.cms.model.User;
 import com.group4.cms.service.BenhNhanService;
+import com.group4.cms.service.PhieuKhamBenhService;
 import com.group4.cms.service.PhongService;
 import com.group4.cms.service.UserService;
 
@@ -32,6 +35,9 @@ public class BenhNhanController {
 	@Autowired
 	private PhongService phongService;
 	
+	@Autowired
+	private PhieuKhamBenhService pkbService;
+	
 	@ModelAttribute("benhNhan")
 	public BenhNhan getBenhNhan() {
 		return new BenhNhan();
@@ -44,7 +50,11 @@ public class BenhNhanController {
 	}
 
 	@RequestMapping("/tiep-nhan")
-	public String addPatient() {
+	public String addPatient(Model model) {
+		List<Phong> dsPhong = new ArrayList<Phong>();
+		dsPhong = phongService.findAll();
+		
+		model.addAttribute("dsPhong", dsPhong);
 		return "add-patient";
 	}
 
@@ -64,6 +74,15 @@ public class BenhNhanController {
 			redirectAttributes.addFlashAttribute("msgType", "success");
 			benhNhan.setNgayTiepNhan(new Date());
 			benhNhanService.save(benhNhan);
+			
+			// BEGIN - add by Hang 31/05/2017
+			List<BenhNhan> dsBenhNhan = benhNhanService.findAll();
+			BenhNhan benhNhanCur = dsBenhNhan.get(dsBenhNhan.size()-1);
+			PhieuKhamBenh phieuKhamBenh = new PhieuKhamBenh();
+			phieuKhamBenh.setBenhNhan(benhNhanCur);
+			phieuKhamBenh.setLyDoKham(benhNhanCur.getTienSuBenh());
+			pkbService.save(phieuKhamBenh);
+			// END - add by Hang 31/05/2017
 		}
 		return "redirect:/tiep-nhan";
 	}

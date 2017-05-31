@@ -44,7 +44,7 @@
 					<li><a><i class="fa fa-stethoscope"></i> Khám bệnh <span
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="general_elements.html">General Elements</a></li>
+							 <li><a href="kham-benh">Khám bệnh</a></li>
 							<li><a href="media_gallery.html">Media Gallery</a></li>
 							<li><a href="typography.html">Typography</a></li>
 						</ul></li>

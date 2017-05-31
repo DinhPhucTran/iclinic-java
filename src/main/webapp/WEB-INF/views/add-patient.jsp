@@ -142,6 +142,16 @@
 												%>
 											</div>
 										</div>
+										<div class="form-group">
+											<label class="control-label col-md-3 col-sm-3 col-xs-12">Phòng </label>
+												<div class="col-md-6 col-sm-6 col-xs-12">
+												<select class="form-control col-md-7 col-xs-12">
+													<c:forEach items = "${dsPhong}" var = "phong">
+														<option value = "${phong.maPhong}">${phong.tenPhong}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
 										<div class="ln_solid"></div>
 										<div class="form-group">
 											<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
