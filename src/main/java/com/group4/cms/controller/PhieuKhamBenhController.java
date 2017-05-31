@@ -26,6 +26,7 @@ import com.group4.cms.model.UserRole;
 import com.group4.cms.model.BenhNhan;
 import com.group4.cms.model.BoPhan;
 import com.group4.cms.model.DichVu;
+import com.group4.cms.model.DonThuoc;
 import com.group4.cms.model.PhieuKhamBenh;
 import com.group4.cms.model.PhieuYeuCauDichVu;
 import com.group4.cms.model.Phong;
@@ -61,6 +62,11 @@ public class PhieuKhamBenhController {
 		return new PhieuYeuCauDichVu();
 	}
 
+	@ModelAttribute("donThuoc")
+	public DonThuoc getDonThuoc(){
+		return new DonThuoc();
+	}
+	
 	@RequestMapping(value = "/phieu-kham-benh/get-phong-by-ma-dich-vu",method = RequestMethod.POST)
 	@ResponseBody
 	public List<Phong> getPhongByMaDichVu(@RequestParam("maDichVu") String maDichVu){
@@ -100,6 +106,30 @@ public class PhieuKhamBenhController {
 		} else {
 			phieuKhamBenh.setNgayKham(new Date());
 			phieuKhamBenhService.save(phieuKhamBenh);
+		}
+		return "redirect:/kham-benh";
+	}
+	
+	@RequestMapping(value = "/don-thuoc/luu", method = RequestMethod.POST)
+	public String saveDonThuoc(@ModelAttribute("donThuoc") DonThuoc donThuocModel, @Valid DonThuoc donThuoc,
+						BindingResult donThuocResult,
+						RedirectAttributes redirectAttributes, Model model){
+		if (donThuocResult.hasErrors()) {
+			model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+		} else {
+			//donThuocService.save(donThuoc);
+		}
+		return "redirect:/kham-benh";
+	}
+	
+	@RequestMapping(value = "/dich-vu-kham/luu", method = RequestMethod.POST)
+	public String savePhieuYeuCauDichVu(@ModelAttribute("phieuYeuCauDichVu") PhieuYeuCauDichVu phieuYeuCauDichVuModel, 
+						@Valid PhieuYeuCauDichVu phieuYeuCauDichVu,
+						BindingResult phieuYeuCauDichVuResult,
+						RedirectAttributes redirectAttributes, Model model){
+		if (phieuYeuCauDichVuResult.hasErrors()) {
+			model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+		} else {
 		}
 		return "redirect:/kham-benh";
 	}

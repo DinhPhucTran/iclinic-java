@@ -137,7 +137,7 @@ font-weight: bold;
 										</div>
 			                    		<div class="box-footer">
 			                   				<button type="reset" class="btn btn-primary">Hủy</button>
-			                    			<button type="submit" class="btn btn-success pull-right">Cập nhật</button>
+			                    			<button id = "btPhieuKhamBenh" type="submit" class="btn btn-success pull-right">Cập nhật</button>
 			               			 	</div>
 									</form:form>
                    		 		</div>
@@ -179,26 +179,31 @@ font-weight: bold;
 								<div class="clearfix"></div>
 							</div>
 		                    </div>
-		                    <div class="form-horizontal">
-                        		<div class="box-body table-responsive no-padding">
-                        			<table class="table table-bordered table-hover" id="tb_ThemDichVu">
-				                        <thead>
-				                            <tr>
-				                                <th>Tên dịch vụ</th>
-				                                <th>Phòng khám</th>
-				                                <th>Đơn giá</th>
-				                                <th></th>
-				                            </tr>
-				                        </thead>
-				                        <tbody>
-				                        </tbody>
-				                    </table>
-                        		</div>
-		                 	</div>
-		                 	<div class="box-footer">
-		                        <button type="reset" class="btn btn-primary" onClick ="xoaDichVu()">Hủy</button>
-		                        <button type="submit" class="btn btn-success pull-right">Lưu và in phiếu khám</button>
-		                    </div>
+	                    	<form:form name="dichVuKham" action="dich-vu-kham/luu" method="post" 
+										class="form-horizontal form-label-left" modelAttribute = "phieuYeuCauDichVu">
+								<form:hidden path="dichVu" id="dichVu"/>
+								<form:hidden path="phieuKham" id="phieuKham"/> 
+			                    <div class="form-horizontal">
+	                        		<div class="box-body table-responsive no-padding">
+	                        			<table class="table table-bordered table-hover" id="tb_ThemDichVu">
+					                        <thead>
+					                            <tr>
+					                                <th>Tên dịch vụ</th>
+					                                <th>Phòng khám</th>
+					                                <th>Đơn giá</th>
+					                                <th></th>
+					                            </tr>
+					                        </thead>
+					                        <tbody>
+					                        </tbody>
+					                    </table>
+	                        		</div>
+			                 	</div>
+			                 	<div class="box-footer">
+			                        <button type="reset" class="btn btn-primary" onClick ="xoaDichVu()">Hủy</button>
+			                        <button type="submit" class="btn btn-success pull-right">Lưu và in phiếu khám</button>
+			                    </div>
+		                    </form:form>
 		                 </div>
 						<!--  End Thêm dịch vụ -->
 					</div>
@@ -252,6 +257,8 @@ font-weight: bold;
 				</div>
 				<!-- Begin kê đơn thuốc -->
 				 <div class="box box-info">
+				 	<form:form name="donThuoc" action="don-thuoc/luu" method="post" 
+					class="form-horizontal form-label-left" modelAttribute="donThuoc">
 		            <div class="box-header with-border">
 		                <div class="x_title">
 							<h2>Kê đơn thuốc</h2>
@@ -282,6 +289,7 @@ font-weight: bold;
                         <button type="reset" class="btn btn-primary">Hủy</button>
                         <button type="submit" class="btn btn-success pull-right">Lưu và in đơn thuốc</button>
                     </div>
+                    </form:form>
 		        </div>
 				<!-- End kê đơn thuốc -->
 				<div>
@@ -352,6 +360,15 @@ font-weight: bold;
 		            $('#lyDoKham').val(table.row(this).data()[6]);
 		            $('#benhNhan').val(table.row(this).data()[7]);
 		        });
+		        
+		        //submit form phieuDichVu
+		        $('#phieuYeuCauDichVu').submit(function(){
+		            alert("Submitted phiếu yêu cầu dịch vụ");
+		            $("#btPhieuKhamBenh").submit();
+		        });
+		        $('#phieuKhamBenh').submit(function(){
+		            alert("Submitted phiếu khám bệnh");
+		        });
 		    });
 			function themDichVu() {
 			 	var rowCount = $('#tb_ThemDichVu').length;
@@ -414,19 +431,15 @@ font-weight: bold;
 			  	var contentcell7 = "<div class='col-sm-10'><input type='button' value =  'Xóa' class='btn btn-default'></input></div>";
 			    cell7.innerHTML = contentcell7; 
 		 }
-		 
-		 function xoaDichVu() {
-			 	var rowCount = $('#tb_ThemDichVu').length;
-			 	var table = document.getElementById("tb_ThemDichVu");
-			    var row = table.deleteRow(rowCount);
-		 }
 		 function changeDichVuSel(elementCur){
 			var index = elementCur.id.substring(6);
 			var phongKham = $('#phongKham' + index);
 			phongKham.text("abc");
 			var donGia = $('#donGia' + index);
 			var maDichVu = elementCur.options[elementCur.selectedIndex].value;
-			
+			// set modelAttribute phieuYeuCauDichVu
+			$('#dichVu').val(maDichVu);
+			$('#phieuKham').val($('#maPhieuKhamBenh').val());
 			// get don gia temp trong attribut data-othervalue
 			var donGiaTemp = $('#dichVu' + index).find('option:selected').attr('data-othervalue');
 			
