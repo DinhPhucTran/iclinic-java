@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group4.cms.model.BoPhan;
 import com.group4.cms.service.BoPhanService;
@@ -46,15 +47,18 @@ public class BoPhanController {
 	}
 	
 	@RequestMapping(value = "/xoa-bo-phan", method = RequestMethod.POST)
-	public String xoaBoPhan(@ModelAttribute("boPhan") @Valid BoPhan boPhan, BindingResult result, Model model){
+	public String xoaBoPhan(@ModelAttribute("boPhan") @Valid BoPhan boPhan, BindingResult result, Model model,
+			RedirectAttributes redirectAttributes){
 		if(result.hasErrors()){
-			model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+			redirectAttributes.addFlashAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+			redirectAttributes.addFlashAttribute("msgType", "error");
 		} else {
 			try{
 				bpService.delete(boPhan.getId());
 				model.addAttribute("message", "Đã xóa bộ phận " + boPhan.getTenBoPhan());
 			} catch (Exception e) {
-				model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");				
+				redirectAttributes.addFlashAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");		
+				redirectAttributes.addFlashAttribute("msgType", "error");			
 			}			
 		}
 		

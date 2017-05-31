@@ -20,7 +20,7 @@
 			</div>
 			<div class="profile_info">
 				<span>Welcome,</span>
-				<h2>${username}</h2>
+				<h2>${fullname}</h2>
 			</div>
 			<div class="clearfix"></div>
 		</div>

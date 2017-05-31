@@ -25,4 +25,6 @@ public interface UserService {
 	public int countYta();
 
 	public void delete(int id);
+	
+	public String getFullName(String userName);
 }
