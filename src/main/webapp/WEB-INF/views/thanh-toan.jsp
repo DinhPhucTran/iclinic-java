@@ -112,17 +112,19 @@ font-weight: bold;
 										<div class="form-group">
 											<label class="col-sm-3 control-label">Ngày Khám </label>
 											<div class="col-sm-9">
-												<h3 id = "ngayKham"></h3>
+												<h4 id = "ngayKham"></h4>
 											</div>
 										</div>
 										<div class="form-group">
 											<label class="col-sm-3 control-label">Ngày thanh toán </label>
 											<div class="col-sm-9">
+												<h4>
 													<%
 													Date dNow = new Date();
 													SimpleDateFormat ft = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
 													out.print("<h4>" + ft.format(dNow) + "</h4>");
 												%>
+												</h4>
 											</div>
 										</div>
 			                    		<div class="box-footer">
@@ -260,11 +262,6 @@ font-weight: bold;
 			            getPhieuKhamDangChoByMaPhieuKham();
 		        	}
 		        });
-		        
-		        //catch submit form event
-		        $('#hoaDon').submit(function(){
-		        	updatePKBTinhTrangThanhToan();
-		        });
 		    });
 			
 		 function getDichVuByMaPhieuKham(){
@@ -280,21 +277,6 @@ font-weight: bold;
 	         	 console.log("error",e);
 	          }
 	      });  
-		 }
-		 
-		 function updatePKBTinhTrangThanhToan(){
-			 var maPhieuKhamBenh = $('#phieuKhamBenh').val();
-		        $.ajax({
-		          type: "POST",
-		          url: "hoa-don/get-ma-phieu-kham-benh",
-		          data: { maPhieuKhamBenh: maPhieuKhamBenh },
-		          success: function(a) {
-		        	  console.log("a",a);
-		          },
-		          error:function (e){
-		         	 console.log("error",e);
-		          }
-		      });  
 		 }
 		 
 		 function getPhieuKhamDangChoByMaPhieuKham(){

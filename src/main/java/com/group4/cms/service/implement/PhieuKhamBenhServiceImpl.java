@@ -29,7 +29,4 @@ public class PhieuKhamBenhServiceImpl implements PhieuKhamBenhService{
 	public List<PhieuKhamBenh> findPKBChuaThanhToan(){
 		return phieuKhamBenhDao.findPKBChuaThanhToan();
 	}
-	public void updateTinhTrangThanhToan(int maPhieuKhamBenh){
-		phieuKhamBenhDao.updateTinhTrangThanhToan(maPhieuKhamBenh);
-	}
 }
