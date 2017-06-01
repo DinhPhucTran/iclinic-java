@@ -9,4 +9,6 @@ public interface PhieuKhamBenhService {
 	public List<PhieuKhamBenh> findAll();
 	public PhieuKhamBenh save(PhieuKhamBenh phieuKhamBenh);
 	public PhieuKhamBenh findById(Integer id);
+	public List<PhieuKhamBenh> findPKBChuaThanhToan();
+	public void updateTinhTrangThanhToan(int maPhieuKhamBenh);
 }
