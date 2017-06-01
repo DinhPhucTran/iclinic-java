@@ -26,4 +26,10 @@ public class PhieuKhamBenhServiceImpl implements PhieuKhamBenhService{
 	public PhieuKhamBenh findById(Integer id) {
 		return phieuKhamBenhDao.findOne(id);
 	}
+	public List<PhieuKhamBenh> findPKBChuaThanhToan(){
+		return phieuKhamBenhDao.findPKBChuaThanhToan();
+	}
+	public void updateTinhTrangThanhToan(int maPhieuKhamBenh){
+		phieuKhamBenhDao.updateTinhTrangThanhToan(maPhieuKhamBenh);
+	}
 }
