@@ -77,15 +77,6 @@ public class HoaDonController {
 		return phieuKhamDangCho;
 	}
 	
-	@RequestMapping(value = "/hoa-don/get-ma-phieu-kham-benh",method = RequestMethod.POST)
-	@ResponseBody
-	public String getMaPhieuKhamBenh(@RequestParam("maPhieuKhamBenh") String maPhieuKhamBenh){
-		int i = Integer.parseInt(maPhieuKhamBenh);
-		pkbService.updateTinhTrangThanhToan(i);
-		String a = "";
-		return a;
-	}
-	
 	@RequestMapping(value = "/hoa-don/luu", method = RequestMethod.POST)
 	public String save(@ModelAttribute("hoaDon") HoaDon hoaDonModel, @Valid HoaDon hoaDon,
 						BindingResult hoaDonResult,
@@ -95,6 +86,11 @@ public class HoaDonController {
 		} else {
 			hoaDon.setNgayThanhToan(new Date());
 			hoaDonService.save(hoaDon);
+			System.out.println(hoaDon.getPhieuKham().getPhieuKhamBenh().getMaPhieuKhamBenh());
+			PhieuKhamBenh p = new PhieuKhamBenh();
+			p.setMaPhieuKhamBenh(hoaDon.getPhieuKham().getPhieuKhamBenh().getMaPhieuKhamBenh());
+			p.setTinhTrangThanhToan(true);
+			pkbService.save(p);
 		}
 		return "redirect:/thanh-toan";
 	}
