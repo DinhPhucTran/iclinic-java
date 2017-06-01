@@ -75,7 +75,7 @@ public class BenhNhanController {
 				redirectAttributes.addFlashAttribute("msgType", "error");
 				return "redirect:/tiep-nhan";
 			}
-			redirectAttributes.addFlashAttribute("message", "Thêm bệnh nhân hợp lệ.");
+			redirectAttributes.addFlashAttribute("message", "Đã thêm bệnh nhân.");
 			redirectAttributes.addFlashAttribute("msgType", "success");
 			benhNhan.setNgayTiepNhan(new Date());
 			benhNhanService.save(benhNhan);
@@ -115,9 +115,10 @@ public class BenhNhanController {
 		List<User> doctors = userService.findByBoPhan(2);
 		List<User> nurses = userService.findByBoPhan(3);
 		List<Phong> rooms = phongService.findByDichVu(1);
-		if (dsBenhNhan.isEmpty() || receptionists.isEmpty() || doctors.isEmpty() || nurses.isEmpty()
-				|| rooms.isEmpty()) {
-			model.addAttribute("message", "Không có bệnh nhân nào cả.");
+		if (dsBenhNhan.isEmpty() 
+				//|| receptionists.isEmpty() || doctors.isEmpty() || nurses.isEmpty() || rooms.isEmpty()
+				) {
+			model.addAttribute("message", "Danh sách bệnh nhân trống.");
 			model.addAttribute("msgType", "success");
 			return "patients";
 		}

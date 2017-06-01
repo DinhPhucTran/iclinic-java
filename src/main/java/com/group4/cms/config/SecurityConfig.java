@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/add-user").permitAll()
                 .antMatchers("/user-list").permitAll()
-                .antMatchers("/**").fullyAuthenticated()
+                .antMatchers("/**").permitAll()
                 .and().formLogin()
                     	.loginPage("/login").failureUrl("/login?error")
                     	.usernameParameter("username")

@@ -49,8 +49,8 @@
 									<h2>Danh sách bệnh nhân</h2>
 									<div class="clearfix"></div>
 								</div>
-							</div>
-							<div class="x_content">
+								
+								<div class="x_content">
 								<table id="table-user"
 									class="table table-striped table-bordered">
 									<thead>
@@ -85,6 +85,8 @@
 									</tbody>
 								</table>
 							</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -106,7 +108,7 @@
 								modelAttribute="hoSoDieuTri">
 								<div class="modal-body">
 									<div class="item form-group">
-										<h1>Nhập viện</h1>
+										<!-- <h1>Nhập viện</h1> -->
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
 											path="benhNhan.maBenhNhan" for="del-id">Mã bệnh nhân <span
 												class="required">*</span>
