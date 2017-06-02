@@ -6,7 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -133,17 +132,17 @@ public class UserController {
 		else
 			System.out.println("NULLLLLLLLll");
 
-		/*if (user.getPassword() != null) {
+		if (user.getPassword().trim() != "") {
 			String pass = user.getPassword();
-			String hashed = encodePassword(pass);
+			System.out.println("Pass:" + pass);
+			String hashed = passwordEncoder.encode(pass);
 			if (!"".equals(hashed)) {
 				user.setPassword(hashed);
+				System.out.println("New:" + hashed);
 			}
 		} else {
 			user.setPassword(oldUser.getPassword());
-		}*/
-		if(user.getPassword() == null) {
-			user.setPassword(oldUser.getPassword());
+			System.out.println("Old: " + oldUser.getPassword());
 		}
 
 		user.setEnabled(true);
@@ -184,20 +183,15 @@ public class UserController {
 
 	@RequestMapping(value = "/getProfileImage", method = RequestMethod.GET)
 	public void getImage(@RequestParam("id") int id, HttpServletResponse response) {
-		// ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		int imgId = userService.getImageId(id);
 		FileWrapper file = fileService.findById(imgId);
 		System.out
 				.println(file.getName() + "/" + file.getContent().getContentType() + "/" + file.getContent().getSize());
-		// byte[] imgByte = fileService.getFileContent(2);
 		byte[] imgByte = file.getContent().getBytes();
 		response.setContentType("image/jpeg, image/jpg, image/png");
-		// response.setHeader("Content-Length", String.valueOf(imgByte.length));
 		response.setHeader("Content-Disposition", "attachment; filename=\"cv-" + id + ".jpg");
-		//
+
 		try {
-			// ServletOutputStream servletOutputStream =
-			// response.getOutputStream();
 			response.getOutputStream().write(imgByte);
 			response.getOutputStream().close();
 		} catch (IOException ex) {

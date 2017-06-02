@@ -28,4 +28,7 @@ public interface UserDao extends JpaRepository<User, Integer>, UserRepository {
     
     @Query(value = "select count(*) from user_user_roles where roles_id = 3", nativeQuery = true)
     public Integer counYta();
+    
+    @Query(value = "select full_name from user where username like :userName", nativeQuery = true)
+    public String getFullNameByUserName(@Param("userName") String userName);
 }

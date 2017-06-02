@@ -102,4 +102,13 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public String getFullName(String userName) {
+		try{
+			return userDao.getFullNameByUserName(userName);
+		} catch (Exception e){
+			return "";
+		}
+	}
 }

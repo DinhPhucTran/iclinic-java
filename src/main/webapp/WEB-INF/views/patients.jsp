@@ -49,8 +49,8 @@
 									<h2>Danh sách bệnh nhân</h2>
 									<div class="clearfix"></div>
 								</div>
-							</div>
-							<div class="x_content">
+								
+								<div class="x_content">
 								<table id="table-user"
 									class="table table-striped table-bordered">
 									<thead>
@@ -79,12 +79,17 @@
 														onclick="nhapVien(${bn.maBenhNhan}, '${bn.tenBenhNhan}', '${bn.tuoi}')">
 														<i class="fa fa-pencil-square-o">Nhập viện</i>
 													</button>
+													<button class="btn btn-info" onClick = "lapPhieuKham(${bn.maBenhNhan})">
+														<i class="fa fa-pencil-square-o">Lập phiếu khám</i>
+													</button>
 												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
 							</div>
+							</div>
+							
 						</div>
 					</div>
 				</div>
@@ -106,7 +111,7 @@
 								modelAttribute="hoSoDieuTri">
 								<div class="modal-body">
 									<div class="item form-group">
-										<h1>Nhập viện</h1>
+										<!-- <h1>Nhập viện</h1> -->
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
 											path="benhNhan.maBenhNhan" for="del-id">Mã bệnh nhân <span
 												class="required">*</span>
@@ -234,6 +239,19 @@
 		function nhapVien(id, ten, tuoi) {
 			$("#del-id").val(id);
 			$("#del-ten").val(ten);
+		}
+		function lapPhieuKham(maBenhNhan){
+			console.log(maBenhNhan);
+			$.ajax({
+		          type: "POST",
+		          url: "phieu-kham-benh/lap-phieu-kham-benh",
+		          data: { maBenhNhan: maBenhNhan },
+		          success: function(result) {
+		          },
+		          error:function (e){
+		         	 console.log("error",e);
+		          }
+			 });  
 		}
 	</script>
 </body>

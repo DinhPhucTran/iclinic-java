@@ -26,13 +26,13 @@
 		<div class="animate form login_form">
 			<section class="login_content">
 				<form action="login" method="POST">
-					<h1>Login</h1>
+					<h1>Đăng nhập</h1>
 					<div>
-						<input type="text" class="form-control" placeholder="Username"
+						<input type="text" class="form-control" placeholder="Tên đăng nhập"
 							required name="username" />
 					</div>
 					<div>
-						<input type="password" class="form-control" placeholder="Password"
+						<input type="password" class="form-control" placeholder="Mật khẩu"
 							required name="password" />
 					</div>
 					<div>
@@ -40,8 +40,7 @@
 							value="${_csrf.token}" />
 					</div>
 					<div>
-						<button class="btn btn-default submit" type="submit">Log
-							in</Button>
+						<button class="btn btn-default submit" type="submit">Đăng nhập</Button>
 					</div>
 
 					<div class="clearfix"></div>

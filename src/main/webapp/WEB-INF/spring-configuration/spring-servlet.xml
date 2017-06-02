@@ -73,6 +73,8 @@
 				<bean class="com.group4.cms.util.StringToUserConverter"></bean>
 				<bean class="com.group4.cms.util.StringToDichVuConverter"></bean>
 				<bean class="com.group4.cms.util.StringToPhieuKhamBenhConverter"></bean>
+				<bean class="com.group4.cms.util.StringToPhieuKhamDangChoConverter"></bean>
+				<bean class="com.group4.cms.util.StringArrayToPhieuYeuCauDichVuListConverter"></bean>
 			</list>
 		</property>
 	</bean>

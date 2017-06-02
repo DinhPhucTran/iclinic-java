@@ -16,10 +16,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.group4.cms.model.BenhNhan;
 import com.group4.cms.model.HoSoDieuTriNoiTru;
 import com.group4.cms.model.PhieuKhamBenh;
+import com.group4.cms.model.PhieuKhamDangCho;
 import com.group4.cms.model.Phong;
 import com.group4.cms.model.User;
 import com.group4.cms.service.BenhNhanService;
 import com.group4.cms.service.PhieuKhamBenhService;
+import com.group4.cms.service.PhieuKhamDangChoService;
 import com.group4.cms.service.PhongService;
 import com.group4.cms.service.UserService;
 
@@ -37,6 +39,9 @@ public class BenhNhanController {
 	
 	@Autowired
 	private PhieuKhamBenhService pkbService;
+	
+	@Autowired 
+	private PhieuKhamDangChoService pkdcService;
 	
 	@ModelAttribute("benhNhan")
 	public BenhNhan getBenhNhan() {
@@ -70,7 +75,7 @@ public class BenhNhanController {
 				redirectAttributes.addFlashAttribute("msgType", "error");
 				return "redirect:/tiep-nhan";
 			}
-			redirectAttributes.addFlashAttribute("message", "Thêm bệnh nhân hợp lệ.");
+			redirectAttributes.addFlashAttribute("message", "Đã thêm bệnh nhân.");
 			redirectAttributes.addFlashAttribute("msgType", "success");
 			benhNhan.setNgayTiepNhan(new Date());
 			benhNhanService.save(benhNhan);
@@ -82,6 +87,22 @@ public class BenhNhanController {
 			phieuKhamBenh.setBenhNhan(benhNhanCur);
 			phieuKhamBenh.setLyDoKham(benhNhanCur.getTienSuBenh());
 			pkbService.save(phieuKhamBenh);
+			
+			// Insert PhieuKhamDangCho
+			List<PhieuKhamBenh> dsPhieuKhamBenh = pkbService.findAll();
+			PhieuKhamBenh phieuKhamBenhCur = dsPhieuKhamBenh.get(dsPhieuKhamBenh.size()-1);
+			PhieuKhamDangCho phieuKhamDangCho = new PhieuKhamDangCho();
+			phieuKhamDangCho.setPhieuKhamBenh(phieuKhamBenhCur);
+			
+			int countPhieuKhamDangCho;
+			if(pkdcService.findAll().isEmpty()){
+				countPhieuKhamDangCho = 1;
+			}
+			else{
+				countPhieuKhamDangCho= pkdcService.findAll().size()+1;
+			}
+			phieuKhamDangCho.setSoThuTu(countPhieuKhamDangCho);
+			pkdcService.save(phieuKhamDangCho);
 			// END - add by Hang 31/05/2017
 		}
 		return "redirect:/tiep-nhan";
@@ -94,9 +115,10 @@ public class BenhNhanController {
 		List<User> doctors = userService.findByBoPhan(2);
 		List<User> nurses = userService.findByBoPhan(3);
 		List<Phong> rooms = phongService.findByDichVu(1);
-		if (dsBenhNhan.isEmpty() || receptionists.isEmpty() || doctors.isEmpty() || nurses.isEmpty()
-				|| rooms.isEmpty()) {
-			model.addAttribute("message", "Không có bệnh nhân nào cả.");
+		if (dsBenhNhan.isEmpty() 
+				//|| receptionists.isEmpty() || doctors.isEmpty() || nurses.isEmpty() || rooms.isEmpty()
+				) {
+			model.addAttribute("message", "Danh sách bệnh nhân trống.");
 			model.addAttribute("msgType", "success");
 			return "patients";
 		}

@@ -9,7 +9,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class=""><a href="javascript:;"
 					class="user-profile dropdown-toggle" data-toggle="dropdown"
-					aria-expanded="false"> <img src="getProfileImageByUserName?username=${username}" alt="Profile Image" onerror="this.src='resources/images/user.jpg';">${username} <span class=" fa fa-angle-down"></span>
+					aria-expanded="false"> <img src="getProfileImageByUserName?username=${username}" alt="Profile Image" onerror="this.src='resources/images/user.jpg';">${fullname} <span class=" fa fa-angle-down"></span>
 				</a>
 					<ul class="dropdown-menu dropdown-usermenu pull-right">
 						<li><a href="javascript:;"> Profile</a></li>
