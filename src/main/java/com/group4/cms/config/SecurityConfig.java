@@ -22,26 +22,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Qualifier("userDetailsService")
 	UserDetailsService userDetailsService;
 	
-	/*@Autowired
+	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	}*/
+		//Here is for in memory authentication
+		auth.inMemoryAuthentication().withUser("ad1").password("12345").roles("ROLE_ADMIN");
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 	    http.authorizeRequests()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/login").permitAll()
-                .antMatchers("/add-user").permitAll()
-                .antMatchers("/user-list").permitAll()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/user-list", "/edit-user", "/add-user", "/delete-user", "/bo-phan", "/them-bo-phan", "/xoa-bo-phan").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/**").fullyAuthenticated()
                 .and().formLogin()
                     	.loginPage("/login").failureUrl("/login?error")
                     	.usernameParameter("username")
                     	.passwordParameter("password")
 		.and().logout().logoutSuccessUrl("/login?logout")
-		//.and().csrf()
 		.and().exceptionHandling().accessDeniedPage("/403");
 	    
 	    http.csrf().disable();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +20,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group4.cms.model.User;
-import com.group4.cms.model.UserRole;
 import com.group4.cms.model.BenhNhan;
-import com.group4.cms.model.BoPhan;
+import com.group4.cms.model.ChiTietDonThuoc;
 import com.group4.cms.model.DichVu;
 import com.group4.cms.model.DonThuoc;
+import com.group4.cms.model.HoSoDieuTriNoiTru;
+import com.group4.cms.model.ListChiTietDonThuoc;
 import com.group4.cms.model.ListPhieuYeuCauDichVu;
 import com.group4.cms.model.PhieuKhamBenh;
 import com.group4.cms.model.PhieuKhamDangCho;
 import com.group4.cms.model.PhieuYeuCauDichVu;
 import com.group4.cms.model.Phong;
+import com.group4.cms.model.Thuoc;
 import com.group4.cms.service.BenhNhanService;
-import com.group4.cms.service.BoPhanService;
+import com.group4.cms.service.ChiTietDonThuocService;
 import com.group4.cms.service.DichVuService;
+import com.group4.cms.service.DonThuocService;
+import com.group4.cms.service.HoSoDieuTriService;
 import com.group4.cms.service.PhieuKhamBenhService;
 import com.group4.cms.service.PhieuKhamDangChoService;
 import com.group4.cms.service.PhieuYeuCauDichVuService;
 import com.group4.cms.service.PhongService;
+import com.group4.cms.service.ThuocService;
 import com.group4.cms.service.UserService;
 
 @Controller
@@ -67,6 +74,18 @@ public class PhieuKhamBenhController {
 	@Autowired 
 	private PhieuKhamDangChoService pkdcService;
 	
+	@Autowired 
+	private ChiTietDonThuocService ctdtService;
+	
+	@Autowired 
+	private ThuocService thuocService;
+	
+	@Autowired 
+	private DonThuocService donThuocService;
+	
+	@Autowired
+	private HoSoDieuTriService hoSoDieuTriService;
+	
 	@ModelAttribute("phieuKhamBenh")
 	public PhieuKhamBenh getPhieuKhamBenh(){
 		return new PhieuKhamBenh();
@@ -75,10 +94,25 @@ public class PhieuKhamBenhController {
 	public PhieuYeuCauDichVu getPhieuYeuCauDichVu(){
 		return new PhieuYeuCauDichVu();
 	}
+	
+	@ModelAttribute("hoSoDieuTri")
+	public HoSoDieuTriNoiTru getHoSoDieuTriNoiTru() {
+		return new HoSoDieuTriNoiTru();
+	}
 
 	@ModelAttribute("donThuoc")
 	public DonThuoc getDonThuoc(){
 		return new DonThuoc();
+	}
+	
+	@ModelAttribute("chiTietDonThuoc")
+	public ChiTietDonThuoc getChiTietDonThuoc(){
+		return new ChiTietDonThuoc();
+	}
+	
+	@ModelAttribute("listChiTietDonThuoc")
+	public ListChiTietDonThuoc getListChiTietDonThuoc(){
+		return new ListChiTietDonThuoc();
 	}
 	
 	@RequestMapping(value = "/phieu-kham-benh/get-phong-by-ma-dich-vu",method = RequestMethod.POST)
@@ -101,6 +135,15 @@ public class PhieuKhamBenhController {
 		List<DichVu> dsDichVu = new ArrayList<DichVu>();
 		dsDichVu = dvService.findAll();
 		
+		List<Thuoc> dsThuoc = new ArrayList<Thuoc>();
+		dsThuoc = thuocService.findAll();
+		
+		ListPhieuYeuCauDichVu listPYCDichVu = new ListPhieuYeuCauDichVu();
+		listPYCDichVu.setPhieuYeuCauDichVu(new ArrayList<PhieuYeuCauDichVu>(pycDichVuService.findAll()));
+		
+		ListChiTietDonThuoc listChiTietDonThuoc = new ListChiTietDonThuoc();
+		listChiTietDonThuoc.setChiTietDonThuoc(new ArrayList<ChiTietDonThuoc>(ctdtService.findAll()));
+		
 		List<PhieuKhamBenh> dsPhieuKhamBenh = new ArrayList<PhieuKhamBenh>();
 		dsPhieuKhamBenh = pkbService.findAll();
 		
@@ -108,11 +151,15 @@ public class PhieuKhamBenhController {
 		model.addAttribute("dsUser", users);
 		model.addAttribute("dsBenhNhan", benhNhan);
 		model.addAttribute("dsPhieuKhamBenh", dsPhieuKhamBenh);
+		model.addAttribute("listPYCDichVu", listPYCDichVu);
+		model.addAttribute("listChiTietDonThuoc", listChiTietDonThuoc);
+		model.addAttribute("dsThuoc", dsThuoc);
 		return "kham-benh";
+		//return "test";
 	}
 	
 	@RequestMapping(value = "/phieu-kham-benh/luu", method = RequestMethod.POST)
-	public String save(@ModelAttribute("phieuKhamBenh") PhieuKhamBenh phieuKhamBenhModel, @Valid PhieuKhamBenh phieuKhamBenh,
+	public String savePhieuKhamBenh(@ModelAttribute("phieuKhamBenh") PhieuKhamBenh phieuKhamBenhModel, @Valid PhieuKhamBenh phieuKhamBenh,
 						BindingResult phieuKhamBenhResult,
 						RedirectAttributes redirectAttributes, Model model){
 		if (phieuKhamBenhResult.hasErrors()) {
@@ -124,30 +171,58 @@ public class PhieuKhamBenhController {
 		return "redirect:/kham-benh";
 	}
 	
-	@RequestMapping(value = "/don-thuoc/luu", method = RequestMethod.POST)
-	public String saveDonThuoc(@ModelAttribute("donThuoc") DonThuoc donThuocModel, @Valid DonThuoc donThuoc,
-						BindingResult donThuocResult,
-						RedirectAttributes redirectAttributes, Model model){
-		if (donThuocResult.hasErrors()) {
-			model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
-		} else {
-			//donThuocService.save(donThuoc);
+	@RequestMapping(value = "/phieu-kham-benh/cap-nhat",  method = RequestMethod.POST)
+	@ResponseBody
+	public String updatePhieuKhamBenh(@RequestParam("maPhieuKhamBenh") String maPhieuKhamBenh,
+			@RequestParam("benhNhan") String benhNhanId,@RequestParam("bacSi") String bacsiId,
+			@RequestParam("lyDoKham") String lyDoKham,	@RequestParam("chanDoan") String chanDoan,
+			@RequestParam("loiDan") String loiDan,RedirectAttributes redirectAttributes){
+		     PhieuKhamBenh phieuKhamBenh = new PhieuKhamBenh();
+		     phieuKhamBenh.setMaPhieuKhamBenh(Integer.parseInt(maPhieuKhamBenh));
+		     System.out.println(maPhieuKhamBenh);
+		     System.out.println(loiDan);
+		     System.out.println(chanDoan);
+		     BenhNhan benhNhan = new BenhNhan();
+		     benhNhan.setMaBenhNhan(Integer.parseInt(benhNhanId));
+		     phieuKhamBenh.setBenhNhan(benhNhan);
+		     
+		     User bacsi = new User();
+		     bacsi.setId(Integer.parseInt(bacsiId));
+		     phieuKhamBenh.setBacSi(bacsi);
+		     phieuKhamBenh.setChanDoan(chanDoan);
+		     phieuKhamBenh.setLoiDan(loiDan);
+		     phieuKhamBenh.setLyDoKham(lyDoKham);
+		     
+		     pkbService.save(phieuKhamBenh);
+	      return "success";
+	   }
+	
+	@RequestMapping(value = "/phieu-yeu-cau-dich-vu/luu", method = RequestMethod.POST)
+	public String savePhieuYeuCauDichVu(@ModelAttribute("listPYCDichVu") @Valid ListPhieuYeuCauDichVu listPYCDichVu) {
+		List<PhieuYeuCauDichVu> yeuCauDichVu = listPYCDichVu.getPhieuYeuCauDichVu();
+		for (PhieuYeuCauDichVu phieuYeuCauDichVu : yeuCauDichVu) {
+			pycDichVuService.save(phieuYeuCauDichVu);
 		}
 		return "redirect:/kham-benh";
 	}
 	
-		@RequestMapping(value = "/phieu-yeu-cau-dich-vu/luu", method = RequestMethod.POST)
-		public String savePhieuYeuCauDichVu(@ModelAttribute("listPYCDichVu") @Valid ListPhieuYeuCauDichVu listPYCDichVu) {
-			List<PhieuYeuCauDichVu> yeuCauDichVu = listPYCDichVu.getPhieuYeuCauDichVu();
-			try{
-				for (PhieuYeuCauDichVu phieuYeuCauDichVu : yeuCauDichVu) {
-					pycDichVuService.save(phieuYeuCauDichVu);
-				}
-			}catch (Exception e){
-				
-			}
-			return "redirect:/kham-benh";
+	// lưu đơn thuốc và chi tiết đơn thuốc
+	@RequestMapping(value = "/don-thuoc/luu", method = RequestMethod.POST)
+	public String saveDonThuoc(@ModelAttribute("listChiTietDonThuoc") @Valid ListChiTietDonThuoc listChiTietDonThuoc, BindingResult resultChiTiet,
+					@ModelAttribute("donThuoc") @Valid DonThuoc donThuoc, BindingResult resultDonThuoc) {
+		List<ChiTietDonThuoc> chiTietDonThuocList = listChiTietDonThuoc.getChiTietDonThuoc();
+		double tongTien = 0;
+		for (ChiTietDonThuoc chiTietDonThuoc : chiTietDonThuocList) {
+			ctdtService.save(chiTietDonThuoc);
+			tongTien += chiTietDonThuoc.getThuoc().getDonGia();
 		}
+		donThuoc.setNgayKeDon(new Date());
+		donThuoc.setTongTien(tongTien);
+		donThuoc.setDsThuoc(chiTietDonThuocList);
+		donThuocService.save(donThuoc);
+		
+		return "redirect:/kham-benh";
+	}
 	
 	// lập phiếu khám bệnh khi bệnh nhân đã có trong danh sách
 		@RequestMapping(value = "/phieu-kham-benh/lap-phieu-kham-benh", method = RequestMethod.POST)

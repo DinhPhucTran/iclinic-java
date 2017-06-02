@@ -11,17 +11,15 @@ import com.group4.cms.model.Thuoc;
 import com.group4.cms.service.ThuocService;
 
 @Service
-public class ThuocServiceImpl implements ThuocService{
-
+public class ThuocServiceImpl implements ThuocService {
 	@Autowired
 	ThuocDao thuocDao;
 
-//	@Override
 	public List<Thuoc> findAll() {
 		List<Thuoc> result = new ArrayList<Thuoc>();
-		try{
+		try {
 			result = thuocDao.findAll();
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
@@ -46,7 +44,6 @@ public class ThuocServiceImpl implements ThuocService{
 		}
 	}
 
-//	@Override
 	public Thuoc findById(int id) {
 		return thuocDao.findOne(id);
 	}

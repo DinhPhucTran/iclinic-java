@@ -54,5 +54,6 @@
 	<script src="resources/js/custom.js"></script>
 	
 	<script src="resources/js/Chart.min.js"></script>
+	
 </body>
 </html>
