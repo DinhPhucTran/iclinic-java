@@ -89,19 +89,19 @@ font-weight: bold;
 											</div>
 										</div>
 										<div class="form-group">
-											<label class="col-sm-2 control-label"> Bệnh nhân  
+											<label class="col-sm-2 control-label"> Bệnh nhân<span class="required">*</span>  
 											</label>
 											<div class="col-sm-10">
-												<input type="text" id="tenBenhNhan" name="tenBenhNhan"
+												<input type="text" id="tenBenhNhan" name="tenBenhNhan" required="required"
 													class="form-control">
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="bs"
-											class="col-sm-2 control-label"> Bác sĩ  
+											class="col-sm-2 control-label"> Bác sĩ<span class="required">*</span> 
 											</label>
 											<div class="col-sm-10">
-												<form:select class="form-control" path="bacSi" id="bs">
+												<form:select class="form-control" path="bacSi" id="bs" required="required">
 														<option value = "0"></option>
 														<form:options items="${dsUser}"
 															itemValue="id" itemLabel="fullName"></form:options>
@@ -110,7 +110,7 @@ font-weight: bold;
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label"
-												for="name">Lý do khám <span class="required">*</span>
+												for="name">Lý do khám<span class="required">*</span>
 											</label>
 											<div class="col-sm-10">
 												<textarea type="text" id="lyDoKham" name="lyDoKham" required="required"
@@ -119,7 +119,7 @@ font-weight: bold;
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label"
-												for="name">Chẩn đoán <span class="required">*</span>
+												for="name">Chẩn đoán<span class="required">*</span>
 											</label>
 											<div class="col-sm-10">
 												<textarea type="text" id="chandoan" name="chanDoan" required="required"
@@ -128,18 +128,18 @@ font-weight: bold;
 										</div>
 										<div class="form-group">
 											<label class="col-sm-2 control-label"
-												for="name">Lời dặn<span class="required">*</span>
+												for="name">Lời dặn
 											</label>
 											<div class="col-sm-10">
 												<textarea type="text" id="loidan" name="loiDan"
 													class="form-control col-md-7 col-xs-12"></textarea>
 											</div>
 										</div>
-			                    		<div class="box-footer">
-			                   				<button type="reset" class="btn btn-primary">Hủy</button>
-			                    			<button id = "btPhieuKhamBenh" type="submit" class="btn btn-success pull-right">Cập nhật</button>
-			               			 	</div>
 									</form:form>
+									<div class="box-footer">
+			                   				<button type="reset" class="btn btn-primary">Hủy</button>
+			                    			<button id = "btCapNhatThongTinPhieuKham" onClick = "capNhatThongTinPhieuKham()" class="btn btn-success pull-right">Cập nhật</button>
+			               			 </div>
                    		 		</div>
                     		</div>
 						</div>
@@ -198,7 +198,7 @@ font-weight: bold;
 	                        		</div>
 			                 	</div>
 			                 	<div class="box-footer">
-			                        <button type="submit" class="btn btn-success pull-right">Lưu và in phiếu khám</button>
+			                        <button id = "btPhieuKhamBenh" type="submit" class="btn btn-success pull-right">Lưu và in phiếu khám</button>
 			                    </div>
 		                    </form:form>
 		                 </div>
@@ -239,7 +239,11 @@ font-weight: bold;
 															<c:otherwise>Khác</c:otherwise>
 														</c:choose>
 													</td>
-													<td><a href ="" style="color:#3c8db;"> Nhập viện </a></td>
+													<td><button class="btn btn-info" data-toggle="modal"
+														data-target="#modal-dieu-tri"
+														onclick="nhapVien(${pkb.getBenhNhan().getMaBenhNhan()}, '${pkb.getBenhNhan().getMaBenhNhan()}, '${pkb.getBenhNhan().getTuoi()}')">
+														<i class="fa fa-pencil-square-o">Nhập viện</i>
+													</button></td>
 													<td style="display:none;">${pkb.getBenhNhan().getTienSuBenh()}</td>
 													<td style="display:none;">${pkb.getBenhNhan().getMaBenhNhan()}</td>
 												</tr>
@@ -254,9 +258,7 @@ font-weight: bold;
 				</div>
 				<!-- Begin kê đơn thuốc -->
 				 <div class="box box-info">
-				 	<form:form name="donThuoc" action="don-thuoc/luu" method="post" 
-					class="form-horizontal form-label-left" modelAttribute="donThuoc">
-		            <div class="box-header with-border">
+				 <div class="box-header with-border">
 		                <div class="x_title">
 							<h2>Kê đơn thuốc</h2>
 							<div class="navbar-right">
@@ -265,7 +267,10 @@ font-weight: bold;
 							<div class="clearfix"></div>
 						</div>
 		            </div>
+				 	<form:form name="donThuoc" action="don-thuoc/luu" method="post" 
+					class="form-horizontal form-label-left">
 		            <div class="form-horizontal">
+		            	<input type = "hidden" name="phieuKham" id="phieuKhamThuoc" />
 		                <div class="box-body table-responsive no-padding">
 		                	<table class="table table-hover" id = "tb_ThemDonThuoc">
 		                		 <thead>
@@ -278,7 +283,8 @@ font-weight: bold;
 		                                <th>Tối</th>
 		                            </tr>
 		                        </thead>
-		                        <tbody></tbody>
+		                        <tbody>
+		                        </tbody>
 		                	</table>
 		                </div>
 		            </div>
@@ -289,6 +295,102 @@ font-weight: bold;
                     </form:form>
 		        </div>
 				<!-- End kê đơn thuốc -->
+				<!-- Modal tao ho so dieu tri -->
+				<div class="modal fade" id="modal-dieu-tri">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">×</span>
+								</button>
+								<h4 class="modal-title">Nhập viện</h4>
+							</div>
+
+							<form:form class="form-horizontal form-label-left"
+								action="ho-so-dieu-tri" method="POST"
+								modelAttribute="hoSoDieuTri">
+								<div class="modal-body">
+									<div class="item form-group">
+										<!-- <h1>Nhập viện</h1> -->
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="benhNhan.maBenhNhan" for="del-id">Mã bệnh nhân <span
+												class="required">*</span>
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input class="form-control col-md-7 col-xs-12"
+												path="benhNhan.maBenhNhan" id="del-id" readonly="true" />
+										</div>
+									</div>
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="benhNhan.tenBenhNhan" for="tenBenhNhan">Tên bệnh nhân
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input class="form-control col-md-7 col-xs-12"
+												path="benhNhan.tenBenhNhan" id="del-ten" readonly="true" />
+
+										</div>
+									</div>
+									<!-- Nhan vien tiep nhan -> giay nhap vien -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="receptionists" path="giayNhapVien.nhanVienTiepNhan.id">Nhân viên tiếp nhận 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="receptionists" path="giayNhapVien.nhanVienTiepNhan.id">
+												<form:options items="${receptionists}" itemValue="id"
+													itemLabel="fullName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<!-- Bac si -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="doctors" path="bacSi.id">Bác sĩ điều trị 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="doctors" path="bacSi.id">
+												<form:options items="${doctors}" itemValue="id"
+													itemLabel="fullName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<!-- Y ta -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="nurses" path="yTa.id">Y tá điều trị 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="nurses" path="yTa.id">
+												<form:options items="${nurses}" itemValue="id"
+													itemLabel="fullName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<!-- Phong -->
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											for="rooms" path="phong.maPhong">Phòng 
+												</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:select class="form-control" id="rooms" path="phong.maPhong">
+												<form:options items="${rooms}" itemValue="maPhong"
+													itemLabel="tenPhong"></form:options>
+											</form:select>
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Hủy</button>
+									<button type="submit" class="btn btn-danger">Nhập viện</button>
+								</div>
+							</form:form>
+						</div>
+					</div>
+				</div>
+				<!-- /end Modal tao ho so dieu tri -->
 				<div>
 				</div>
 			<!-- End quy trình khám bệnh  -->
@@ -320,6 +422,7 @@ font-weight: bold;
 	 * 
 	 */
 	var indexRowDichVu = 0;
+	var indexRowThuoc = 0;
 	$(document).ready(function(){ 
 			 	$("#tb_DanhSachPhieuKham").DataTable({
 					buttons : [ {
@@ -359,14 +462,14 @@ font-weight: bold;
 		            getDichVuByMaPhieuKham(); 
 		        });
 		        
-		        //submit form phieuDichVu
-		        $('#phieuYeuCauDichVu').submit(function(){
-		            /* alert("Submitted phiếu yêu cầu dịch vụ");
-		            $("#btPhieuKhamBenh").submit(); */
-		        });
+		      /*   //submit form phieuDichVu
 		        $('#phieuKhamBenh').submit(function(){
-		           /*  alert("Submitted phiếu khám bệnh"); */
+		            alert("Submitted phiếu yêu cầu dịch vụ");
+		            $("#btPhieuKhamBenh").submit();
 		        });
+		        $('#phieuYeuCauDichVu').submit(function(){
+		            alert("Submitted phiếu khám bệnh");
+		        }); */
 		    });
 	
 			function getDichVuByMaPhieuKham(){
@@ -390,7 +493,6 @@ font-weight: bold;
 			function displayDichVuThucHien(dsDichVu) {
 				 var index;
 				 var table = document.getElementById("tb_DichVuDaThucHien");
-				 var tongTien = 0;
 				 for (index = 0; index < dsDichVu.length; ++index) {
 					    var row = table.insertRow(index+1);
 					    var cell1 = row.insertCell(0);
@@ -406,8 +508,6 @@ font-weight: bold;
 					  	
 					  	var contentcell3 = "<p class = 'removeRow'>" + dsDichVu[index].donGia + "</p>";
 					    cell3.innerHTML = contentcell3; 
-					    
-					    tongTien += dsDichVu[index].donGia;
 					}
 				}
 			function themDichVu() {
@@ -465,6 +565,82 @@ font-weight: bold;
 		          }
 		      });  
 		 }
+		 
+		 function themDonThuoc() {
+				var rowCount = $('#tb_ThemDonThuoc').length;
+			 	var table = document.getElementById("tb_ThemDonThuoc");
+			    var row = table.insertRow(rowCount);
+			    
+			     var contentcell1 = "<tr><td><div class='col-sm-10'><select name = 'thuocSel' id ="+ "thuocSel" + indexRowThuoc + 
+			    " class='form-control' onChange = 'changeThuocSel(this)'>"
+			    +" <c:forEach items='${dsThuoc}' var='dv'>"
+			    +"<option value='${dv.maThuoc}' data-othervalue ='${dv.donGia}' >${dv.tenThuoc}</option></c:forEach></select></div>"
+			    +"<input type=hidden id=donGiaTemp" + indexRowThuoc + " />"
+			    +"<input type=hidden id=donGiaTemp" + indexRowThuoc + " />"
+			    +"<input type=hidden id = 'thuoc"+indexRowThuoc+ "' name = 'chiTietDonThuoc["+indexRowThuoc +"].thuoc' />";
+			    
+			    contentcell1 += "<td><input type = number min = 0 id = "+"soLuong" + indexRowThuoc  + " name = 'chiTietDonThuoc["+indexRowThuoc +"].soLuong' /></td>";
+			    contentcell1 += "<td><input type = number min = 0 id = "+"sang" + indexRowThuoc  + " name = 'chiTietDonThuoc["+indexRowThuoc +"].sang' /></td>";
+			    contentcell1 += "<td><input type = number min = 0 id = "+"trua" + indexRowThuoc  + " name = 'chiTietDonThuoc["+indexRowThuoc +"].trua' /></td>";
+			    contentcell1 += "<td><input type = number min = 0 id = "+"chieu" + indexRowThuoc  + " name = 'chiTietDonThuoc["+indexRowThuoc +"].chieu' /></td>";
+			    contentcell1 += "<td><input type = number min = 0 id = "+"toi" + indexRowThuoc  + " name = 'chiTietDonThuoc["+indexRowThuoc +"].toi' /></td>";
+			    contentcell1 += "<td><div class='col-sm-10'><input type='button' value =  'Xóa' class='btn btn-default'></input></div></td></tr>";
+			  	
+			  	$("#tb_ThemDonThuoc tbody").append(contentcell1);
+			  	 
+				indexRowThuoc = parseInt(indexRowThuoc) + 1;  
+			}
+			function changeThuocSel(elementCur){
+				 var index = elementCur.id.substring(8);
+				 console.log("index", index);
+					var thuoc = $('#thuoc' + index);
+					console.log(thuoc);
+					var maDichVu = elementCur.options[elementCur.selectedIndex].value;
+					
+					// set modelAttribute chitietdonthuoc
+					thuoc.val(elementCur.value);
+					
+				  	$('#phieuKhamThuoc' + index).val($('#maPhieuKhamBenh').val());
+					$('#dichVu' + index).val(elementCur.value);
+			} 
+			function capNhatThongTinPhieuKham(){
+				var phieuKham = {
+					      "maPhieuKhamBenh" : $('#maPhieuKhamBenh').val(),
+					      "benhNhan" : $('#benhNhan').val(),
+					      "bacSi" : $('#maPhieuKhamBenh').val(),
+					      "lyDoKham" : $('#lyDoKham').val(),
+					       "chanDoan" : $('#chandoan').val(),
+					   		"loiDan" : $('#loidan').val()
+					   };
+				/* $.ajax({
+			        type: "POST",                
+			        url: "phieu-kham-benh/cap-nhat",
+			        data: JSON.stringify(phieuKham),
+			        success: function(){
+			        },
+			        error: function (e) {
+			            console.log("Error " + e);
+			        }
+			        
+			    }); */
+				$.ajax({
+			          type: "POST",
+			          url: "phieu-kham-benh/cap-nhat",
+			          data: { maPhieuKhamBenh : $('#maPhieuKhamBenh').val() , benhNhan : $('#benhNhan').val(),bacSi : $('#maPhieuKhamBenh').val(),
+					      lyDoKham : $('#lyDoKham').val(),
+					       chanDoan : $('#chandoan').val(),
+					   		loiDan : $('#loidan').val() },
+			          success: function() {
+			          },
+			          error:function (e){
+			         	 console.log("error",e);
+			          }
+				});  
+			}
+			function nhapVien(id, ten, tuoi) {
+				$("#del-id").val(id);
+				$("#del-ten").val(ten);
+			}
 	</script>
 </body>
 </html>
