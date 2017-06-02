@@ -28,12 +28,15 @@ import com.group4.cms.model.BoPhan;
 import com.group4.cms.model.DichVu;
 import com.group4.cms.model.DonThuoc;
 import com.group4.cms.model.PhieuKhamBenh;
+import com.group4.cms.model.PhieuKhamDangCho;
 import com.group4.cms.model.PhieuYeuCauDichVu;
 import com.group4.cms.model.Phong;
 import com.group4.cms.service.BenhNhanService;
 import com.group4.cms.service.BoPhanService;
 import com.group4.cms.service.DichVuService;
 import com.group4.cms.service.PhieuKhamBenhService;
+import com.group4.cms.service.PhieuKhamDangChoService;
+import com.group4.cms.service.PhieuYeuCauDichVuService;
 import com.group4.cms.service.PhongService;
 import com.group4.cms.service.UserService;
 
@@ -44,14 +47,24 @@ public class PhieuKhamBenhController {
 	
 	@Autowired
 	private UserService userService;
+	
 	@Autowired
 	BenhNhanService benhNhanService;
+	
 	@Autowired
 	DichVuService dvService;
+	
 	@Autowired 
 	PhieuKhamBenhService pkbService;
+	
 	@Autowired 
 	PhongService phongService;
+	
+	@Autowired 
+	PhieuYeuCauDichVuService pycDichVuService;
+	
+	@Autowired 
+	private PhieuKhamDangChoService pkdcService;
 	
 	@ModelAttribute("phieuKhamBenh")
 	public PhieuKhamBenh getPhieuKhamBenh(){
@@ -132,5 +145,38 @@ public class PhieuKhamBenhController {
 		} else {
 		}
 		return "redirect:/kham-benh";
+	}
+	// lập phiếu khám bệnh khi bệnh nhân đã có trong danh sách
+		@RequestMapping(value = "/phieu-kham-benh/lap-phieu-kham-benh", method = RequestMethod.POST)
+		@ResponseBody
+		public String lapPhieuKhamBenh(@RequestParam("maBenhNhan") String maBenhNhan,RedirectAttributes redirectAttributes){
+			int i = Integer.parseInt(maBenhNhan);
+			PhieuKhamBenh phieuKhamBenh = new PhieuKhamBenh();
+			
+			BenhNhan benhNhan = new BenhNhan();
+			benhNhan.setMaBenhNhan(i);
+			
+			phieuKhamBenh.setBenhNhan(benhNhan);
+			pkbService.save(phieuKhamBenh);
+			
+			// Insert PhieuKhamDangCho
+			List<PhieuKhamBenh> dsPhieuKhamBenh = pkbService.findAll();
+			PhieuKhamBenh phieuKhamBenhCur = dsPhieuKhamBenh.get(dsPhieuKhamBenh.size()-1);
+			PhieuKhamDangCho phieuKhamDangCho = new PhieuKhamDangCho();
+			phieuKhamDangCho.setPhieuKhamBenh(phieuKhamBenhCur);
+			
+			int countPhieuKhamDangCho;
+			if(pkdcService.findAll().isEmpty()){
+				countPhieuKhamDangCho = 1;
+			}
+			else{
+				countPhieuKhamDangCho= pkdcService.findAll().size()+1;
+			}
+			phieuKhamDangCho.setSoThuTu(countPhieuKhamDangCho);
+			pkdcService.save(phieuKhamDangCho);
+			redirectAttributes.addFlashAttribute("message", "Bệnh nhân nhập viện thành công.");
+			redirectAttributes.addFlashAttribute("msgType", "success");
+			return "redirect:/benh-nhan";
+			
 	}
 }

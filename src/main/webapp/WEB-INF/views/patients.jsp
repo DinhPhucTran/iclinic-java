@@ -79,6 +79,9 @@
 														onclick="nhapVien(${bn.maBenhNhan}, '${bn.tenBenhNhan}', '${bn.tuoi}')">
 														<i class="fa fa-pencil-square-o">Nhập viện</i>
 													</button>
+													<button class="btn btn-info" onClick = "lapPhieuKham(${bn.maBenhNhan})">
+														<i class="fa fa-pencil-square-o">Lập phiếu khám</i>
+													</button>
 												</td>
 											</tr>
 										</c:forEach>
@@ -236,6 +239,19 @@
 		function nhapVien(id, ten, tuoi) {
 			$("#del-id").val(id);
 			$("#del-ten").val(ten);
+		}
+		function lapPhieuKham(maBenhNhan){
+			console.log(maBenhNhan);
+			$.ajax({
+		          type: "POST",
+		          url: "phieu-kham-benh/lap-phieu-kham-benh",
+		          data: { maBenhNhan: maBenhNhan },
+		          success: function(result) {
+		          },
+		          error:function (e){
+		         	 console.log("error",e);
+		          }
+			 });  
 		}
 	</script>
 </body>
