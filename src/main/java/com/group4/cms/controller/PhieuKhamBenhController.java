@@ -27,6 +27,7 @@ import com.group4.cms.model.BenhNhan;
 import com.group4.cms.model.BoPhan;
 import com.group4.cms.model.DichVu;
 import com.group4.cms.model.DonThuoc;
+import com.group4.cms.model.ListPhieuYeuCauDichVu;
 import com.group4.cms.model.PhieuKhamBenh;
 import com.group4.cms.model.PhieuKhamDangCho;
 import com.group4.cms.model.PhieuYeuCauDichVu;
@@ -135,17 +136,15 @@ public class PhieuKhamBenhController {
 		return "redirect:/kham-benh";
 	}
 	
-	@RequestMapping(value = "/dich-vu-kham/luu", method = RequestMethod.POST)
-	public String savePhieuYeuCauDichVu(@ModelAttribute("phieuYeuCauDichVu") PhieuYeuCauDichVu phieuYeuCauDichVuModel, 
-						@Valid PhieuYeuCauDichVu phieuYeuCauDichVu,
-						BindingResult phieuYeuCauDichVuResult,
-						RedirectAttributes redirectAttributes, Model model){
-		if (phieuYeuCauDichVuResult.hasErrors()) {
-			model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
-		} else {
+		@RequestMapping(value = "/phieu-yeu-cau-dich-vu/luu", method = RequestMethod.POST)
+		public String savePhieuYeuCauDichVu(@ModelAttribute("listPYCDichVu") @Valid ListPhieuYeuCauDichVu listPYCDichVu) {
+			List<PhieuYeuCauDichVu> yeuCauDichVu = listPYCDichVu.getPhieuYeuCauDichVu();
+			for (PhieuYeuCauDichVu phieuYeuCauDichVu : yeuCauDichVu) {
+				pycDichVuService.save(phieuYeuCauDichVu);
+			}
+			return "redirect:/kham-benh";
 		}
-		return "redirect:/kham-benh";
-	}
+	
 	// lập phiếu khám bệnh khi bệnh nhân đã có trong danh sách
 		@RequestMapping(value = "/phieu-kham-benh/lap-phieu-kham-benh", method = RequestMethod.POST)
 		@ResponseBody

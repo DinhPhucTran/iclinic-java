@@ -74,7 +74,7 @@ font-weight: bold;
 							</div>
 							<div class="form-horizontal">
                    		 		<div class="box-body">
-                   		 			<form:form name="phieuKhamBenh" action="phieu-kham-benh/luu" method="post" 
+                   		 			<form:form id = "phieuKhamBenh" name="phieuKhamBenh" action="phieu-kham-benh/luu" method="post" 
 											class="form-horizontal form-label-left" modelAttribute="phieuKhamBenh">
 										<form:hidden path="maPhieuKhamBenh" id="maPhieuKhamBenh"/> 
 										<form:hidden path="benhNhan" id="benhNhan"/> 
@@ -179,10 +179,8 @@ font-weight: bold;
 								<div class="clearfix"></div>
 							</div>
 		                    </div>
-	                    	<form:form name="dichVuKham" action="dich-vu-kham/luu" method="post" 
-										class="form-horizontal form-label-left" modelAttribute = "phieuYeuCauDichVu">
-								<form:hidden path="dichVu" id="dichVu"/>
-								<form:hidden path="phieuKham" id="phieuKham"/> 
+	                    	<form:form id = "phieuYeuCauDichVu" name="dichVuKham" action="phieu-yeu-cau-dich-vu/luu" method="post" 
+										class="form-horizontal form-label-left" modelAttribute = "listPYCDichVu">
 			                    <div class="form-horizontal">
 	                        		<div class="box-body table-responsive no-padding">
 	                        			<table class="table table-bordered table-hover" id="tb_ThemDichVu">
@@ -200,7 +198,6 @@ font-weight: bold;
 	                        		</div>
 			                 	</div>
 			                 	<div class="box-footer">
-			                        <button type="reset" class="btn btn-primary" onClick ="xoaDichVu()">Hủy</button>
 			                        <button type="submit" class="btn btn-success pull-right">Lưu và in phiếu khám</button>
 			                    </div>
 		                    </form:form>
@@ -322,6 +319,7 @@ font-weight: bold;
 	/** kham-benh.js - Add by Hang - 31/05/2017
 	 * 
 	 */
+	var indexRowDichVu = 0;
 	$(document).ready(function(){ 
 			 	$("#tb_DanhSachPhieuKham").DataTable({
 					buttons : [ {
@@ -354,107 +352,118 @@ font-weight: bold;
 	        	  // set value of phieu kham benh when click row table ds phieu kham
 		        var table = $('#tb_DanhSachPhieuKham').DataTable();
 		        $('#tb_DanhSachPhieuKham tbody').on('click', 'tr', function () {
-		        	console.log(table.row(this).data());
 		        	$('#maPhieuKhamBenh').val(table.row(this).data()[0]);
 		            $('#tenBenhNhan').val(table.row(this).data()[1]);
 		            $('#lyDoKham').val(table.row(this).data()[6]);
 		            $('#benhNhan').val(table.row(this).data()[7]);
+		            getDichVuByMaPhieuKham(); 
 		        });
 		        
 		        //submit form phieuDichVu
 		        $('#phieuYeuCauDichVu').submit(function(){
-		            alert("Submitted phiếu yêu cầu dịch vụ");
-		            $("#btPhieuKhamBenh").submit();
+		            /* alert("Submitted phiếu yêu cầu dịch vụ");
+		            $("#btPhieuKhamBenh").submit(); */
 		        });
 		        $('#phieuKhamBenh').submit(function(){
-		            alert("Submitted phiếu khám bệnh");
+		           /*  alert("Submitted phiếu khám bệnh"); */
 		        });
 		    });
+	
+			function getDichVuByMaPhieuKham(){
+				var maPhieuKhamBenh = $('#maPhieuKhamBenh').val();
+
+				console.log("maPhieuKhamBenh",maPhieuKhamBenh);
+		        $.ajax({
+		          type: "POST",
+		          url: "hoa-don/get-dich-vu-by-ma-phieu-kham",
+		          data: { maPhieuKhamBenh: maPhieuKhamBenh },
+		          success: function(dsDichVu) {
+		        	  console.log(dsDichVu);
+		        	  displayDichVuThucHien(dsDichVu);
+		          },
+		          error:function (e){
+		         	 console.log("error",e);
+		          }
+		      });  
+			 }
+			
+			function displayDichVuThucHien(dsDichVu) {
+				 var index;
+				 var table = document.getElementById("tb_DichVuDaThucHien");
+				 var tongTien = 0;
+				 for (index = 0; index < dsDichVu.length; ++index) {
+					    var row = table.insertRow(index+1);
+					    var cell1 = row.insertCell(0);
+					    var cell2 = row.insertCell(1);
+					    var cell3 = row.insertCell(2);
+					    
+					    var stt = parseInt(index) + 1;
+					    var contentcell1 = "<p class = 'removeRow'>"+ stt +"</p>";
+					  	cell1.innerHTML = contentcell1;
+					  	
+					    var contentcell2 = "<p class = 'removeRow'>"+ dsDichVu[index].tenDichVu +"</p>";
+					  	cell2.innerHTML = contentcell2;
+					  	
+					  	var contentcell3 = "<p class = 'removeRow'>" + dsDichVu[index].donGia + "</p>";
+					    cell3.innerHTML = contentcell3; 
+					    
+					    tongTien += dsDichVu[index].donGia;
+					}
+				}
 			function themDichVu() {
-			 	var rowCount = $('#tb_ThemDichVu').length;
+				var rowCount = $('#tb_ThemDichVu').length;
 			 	var table = document.getElementById("tb_ThemDichVu");
 			    var row = table.insertRow(rowCount);
-			    var cell1 = row.insertCell(0);
-			    var cell2 = row.insertCell(1);
-			    var cell3 = row.insertCell(2);
-			    var cell4 = row.insertCell(3);
-			  
-			    var contentcell1 = "<div class='col-sm-10'><select name = 'dichVuSel' id ="+ "dichVu" + rowCount + 
+			    
+			    var contentcell1 = "<tr><td><div class='col-sm-10'><select name = 'dichVuSel' id ="+ "dichVuSel" + indexRowDichVu + 
 			    " class='form-control' onChange = 'changeDichVuSel(this)'>"
 			    +" <c:forEach items='${dsDichVu}' var='dv'>"
 			    +"<option value='${dv.maDichVu}' data-othervalue ='${dv.donGia}' >${dv.tenDichVu}</option></c:forEach></select></div>"
-			    +"<input type=hidden id=donGiaTemp" + rowCount + " />";
-			    cell1.innerHTML = contentcell1;
+			    +"<input type=hidden id=donGiaTemp" + indexRowDichVu + " />"
+			    +"<input type=hidden id=donGiaTemp" + indexRowDichVu + " />"
+			    +"<input type=hidden id = 'dichVu"+indexRowDichVu+ "' name = 'phieuYeuCauDichVu["+indexRowDichVu +"].dichVu' />"
+			    +"<input type=hidden id = 'phieuKham"+indexRowDichVu+ "' name = 'phieuYeuCauDichVu["+indexRowDichVu +"].phieuKham' />";
 			    
-			    var contentcell2 = "<p id = "+"phongKham" + rowCount + "></p>";
-			  	cell2.innerHTML = contentcell2;
-			  	console.log(contentcell2);
+			    var contentcell2 = "<td><p id = "+"phongKham" + indexRowDichVu + "></p></td>";
+			    
+			  	var contentcell3 = "<td><p id = "+"donGia" + indexRowDichVu + "></p></td>";
+			    
+			  	var contentcell4 = "<td><div class='col-sm-10'><input type='button' value =  'Xóa' class='btn btn-default'></input></div></td></tr>";
 			  	
-			  	var contentcell3 = "<p id = "+"donGia" + rowCount + "></p>";
-			    cell3.innerHTML = contentcell3;
-			    
-			  	var contentcell4 = "<div class='col-sm-10'><input type='button' value =  'Xóa' class='btn btn-default'></input></div>";
-			    cell4.innerHTML = contentcell4; 
+			  	var content = contentcell1 +contentcell2+contentcell3+contentcell4;
+			  	$("#tb_ThemDichVu tbody").append(content);
+			  	 
+			  	indexRowDichVu = parseInt(indexRowDichVu) + 1; 
 			}
 		 
-		 function themDonThuoc() {
-				var rowCount = $('#tb_ThemDonThuoc').length;
-			 	var table = document.getElementById("tb_ThemDonThuoc");
-			    var row = table.insertRow(rowCount);
-			    var cell1 = row.insertCell(0);
-			    var cell2 = row.insertCell(1);
-			    var cell3 = row.insertCell(2);
-			    var cell4 = row.insertCell(3);
-			    var cell5 = row.insertCell(4);
-			    var cell6 = row.insertCell(5);
-			    var cell7 = row.insertCell(6);
-			  
-			    // tam thoi chua co thuocService
-			    var contentcell1 = "<div class='col-sm-10'><select  class='form-control' onChange = 'changeDichVuSel()'> <c:forEach items='${dsDichVu}' var='dv'><option value='${dv.maDichVu}'>${dv.tenDichVu}</option></c:forEach></select></div>";
-			    cell1.innerHTML = contentcell1;
-			    
-			    var contentcell2 = "<input class='form-control' type = 'number'  min = 0  />";
-			  	cell2.innerHTML = contentcell2;
-			  	
-			  	var contentcell3 = "<input class='form-control' type = 'number'  min = 0  />";
-			  	cell3.innerHTML = contentcell3;
-			    
-			  	var contentcell4 = "<input class='form-control' type = 'number'  min = 0  />";
-			  	cell4.innerHTML = contentcell4;
-			  	
-			  	var contentcell5 = "<input class='form-control' type = 'number'  min = 0  />";
-			  	cell5.innerHTML = contentcell5;
-			  	
-			 	var contentcell6 = "<input class='form-control' type = 'number'  min = 0  />";
-			  	cell6.innerHTML = contentcell6;
-			  	
-			  	var contentcell7 = "<div class='col-sm-10'><input type='button' value =  'Xóa' class='btn btn-default'></input></div>";
-			    cell7.innerHTML = contentcell7; 
-		 }
 		 function changeDichVuSel(elementCur){
-			var index = elementCur.id.substring(6);
-			var phongKham = $('#phongKham' + index);
-			phongKham.text("abc");
-			var donGia = $('#donGia' + index);
-			var maDichVu = elementCur.options[elementCur.selectedIndex].value;
-			// set modelAttribute phieuYeuCauDichVu
-			$('#dichVu').val(maDichVu);
-			$('#phieuKham').val($('#maPhieuKhamBenh').val());
-			// get don gia temp trong attribut data-othervalue
-			var donGiaTemp = $('#dichVu' + index).find('option:selected').attr('data-othervalue');
-			
-	        $.ajax({
-	          type: "POST",
-	          url: "phieu-kham-benh/get-phong-by-ma-dich-vu",
-	          data: { maDichVu: maDichVu },
-	          success: function(result) {
-	         	 phongKham.text(result[0].tenPhong);
-	         	 donGia.text(donGiaTemp);
-	          },
-	          error:function (e){
-	         	 console.log("error",e);
-	          }
-	      });  
+			 var index = elementCur.id.substring(9);
+				var phongKham = $('#phongKham' + index);
+				var donGia = $('#donGia' + index);
+				var maDichVu = elementCur.options[elementCur.selectedIndex].value;
+				
+				// set modelAttribute phieuYeuCauDichVu
+				$('#dichVu').val(maDichVu);
+				
+				// set name listDichVu.dichVu[].maDichVu
+			  	$('#phieuKham' + index).val($('#maPhieuKhamBenh').val());
+				$('#dichVu' + index).val(elementCur.value);
+				
+				// get don gia temp trong attribut data-othervalue
+				var donGiaTemp = $('#dichVuSel' + index).find('option:selected').attr('data-othervalue');
+				
+		        $.ajax({
+		          type: "POST",
+		          url: "phieu-kham-benh/get-phong-by-ma-dich-vu",
+		          data: { maDichVu: maDichVu },
+		          success: function(result) {
+		         	 phongKham.text(result[0].tenPhong);
+		         	 donGia.text(donGiaTemp); 
+		          },
+		          error:function (e){
+		         	 console.log("error",e);
+		          }
+		      });  
 		 }
 	</script>
 </body>
