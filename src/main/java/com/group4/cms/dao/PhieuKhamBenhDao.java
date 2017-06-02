@@ -14,4 +14,7 @@ import com.group4.cms.model.PhieuKhamBenh;
 public interface PhieuKhamBenhDao extends JpaRepository<PhieuKhamBenh, Integer>{
 	@Query(value = "select * from phieu_kham_benh where tinh_trang_thanh_toan = 0", nativeQuery = true)
 	public List<PhieuKhamBenh> findPKBChuaThanhToan();
+	
+	@Query(value = "select * from phieu_kham_benh where year(ngay_kham) = :year and month(ngay_kham) = :month", nativeQuery = true)
+	public List<PhieuKhamBenh> getPhieuKhamByThangNam(@Param("month") int month, @Param("year") int year);
 }

@@ -50,12 +50,13 @@
 						<ul class="nav child_menu">
 							<li><a href="benh-nhan-dieu-tri">Danh sách bệnh nhân</a></li>
 						</ul></li>
-					<!-- <li><a><i class="fa fa-bar-chart-o"></i> Quản lý thuốc <span
+					<sec:authorize access="hasRole('ROLE_DS')">
+					<li><a><i class="fa fa-medkit"></i> Quản lý thuốc <span
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="chartjs.html">Chart JS</a></li>
-							<li><a href="chartjs2.html">Chart JS2</a></li>
-						</ul></li> -->
+							<li><a href="ds-thuoc">Danh sách thuốc</a></li>
+						</ul></li>
+					</sec:authorize>
 					<!-- <li><a><i class="fa fa-clone"></i>Báo cáo <span
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
@@ -70,10 +71,15 @@
 							<li><a href="dich-vu">Dịch vụ - Thêm, xoá, sửa</a></li>
 						</ul></li> -->
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="user-list"><i class="fa fa-user"></i> Quản lý người dùng
+						<li><a><i class="fa fa-user"></i> Quản lý người dùng
 							<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="user-list">Danh sách người dùng</a></li>
+						</ul></li>
+						<li><a><i class="fa fa-hospital-o"></i> Quản lý bộ phận <span
+							class="fa fa-chevron-down"></span></a>
+						<ul class="nav child_menu">
+							<li><a href="bo-phan">Danh sách bộ phận</a></li>
 						</ul></li>
 					</sec:authorize>
 				</ul>

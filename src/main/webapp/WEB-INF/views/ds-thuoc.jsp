@@ -13,7 +13,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Quản lý Bộ phận | Clinic</title>
+<title>Quản lý Thuốc | Clinic</title>
 
 <!-- Bootstrap -->
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
@@ -45,7 +45,7 @@
 				<div class="">
 					<div class="page-title">
 						<div class="title_left">
-							<h3>Quản lý Bộ phận</h3>
+							<h3>Quản lý Thuốc</h3>
 						</div>
 					</div>
 
@@ -55,11 +55,11 @@
 						<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="x_panel">
 								<div class="x_title">
-									<h2>Danh sách Bộ phận</h2>
+									<h2>Danh sách Thuốc</h2>
 									<div class="navbar-right">
 										<button class="btn btn-primary" data-toggle="modal"
 											data-target="#modal-them-bp">
-											<i class="fa fa-plus" aria-hidden="true"></i> Thêm bộ phận
+											<i class="fa fa-plus" aria-hidden="true"></i> Thêm Thuốc
 										</button>
 									</div>
 									<div class="clearfix"></div>
@@ -69,24 +69,26 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Tên bộ phận</th>
-												<th>Ghi chú</th>
+												<th>Tên Thuốc</th>
+												<th>Đơn giá</th>
+												<th>Số lượng</th>
 												<th></th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach items="${dsBp}" var="bp">
+											<c:forEach items="${dsThuoc}" var="thuoc">
 												<tr>
-													<td>${bp.tenBoPhan}</td>
-													<td>${bp.ghiChu}</td>
+													<td>${thuoc.tenThuoc}</td>
+													<td>${thuoc.donGia}</td>
+													<td>${thuoc.soLuong}</td>
 													<td><button class="btn btn-info" 
 																data-toggle="modal" data-target="#modal-sua-bp"
-																onclick="suaBoPhan(${bp.id}, '${bp.tenBoPhan}', '${bp.ghiChu}')">
+																onclick="suaThuoc(${thuoc.maThuoc}, '${thuoc.tenThuoc}', '${thuoc.donGia}', '${thuoc.soLuong}')">
 															<i class="fa fa-pencil-square-o"></i>
 														</button>
 														<button class="btn btn-danger"
 																data-toggle="modal" data-target="#modal-xoa-bp"
-																onclick="xoaBoPhan(${bp.id}, '${bp.tenBoPhan}')">
+																onclick="xoaThuoc(${thuoc.maThuoc}, '${thuoc.tenThuoc}')">
 															<i class="fa fa-trash-o"></i>
 														</button></td>
 												</tr>
@@ -108,30 +110,41 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Thêm bộ phận</h4>
+								<h4 class="modal-title" id="myModalLabel">Thêm thuốc</h4>
 							</div>
 
 							<form:form class="form-horizontal form-label-left"
-								action="them-bo-phan" method="POST" modelAttribute="boPhan">
+								action="them-thuoc" method="POST" modelAttribute="thuoc">
 								<div class="modal-body">
 									<div class="item form-group">
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											path="tenBoPhan" for="ten">Tên bộ phận <span
+											path="tenThuoc" for="ten">Tên thuốc <span
 												class="required">*</span>
 										</form:label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<form:input type="text" id="ten" required="required"
-												class="form-control col-md-7 col-xs-12" path="tenBoPhan"></form:input>
+												class="form-control col-md-7 col-xs-12" path="tenThuoc"></form:input>
 										</div>
 									</div>
 
 									<div class="item form-group">
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											path="ghiChu" for="ghiChu">Ghi chú
+											path="donGia" for="donGia">Đơn giá
 										</form:label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<form:input type="text" id="ghiChu"
-												class="form-control col-md-7 col-xs-12" path="ghiChu"></form:input>
+											<form:input type="number" id="donGia"
+												class="form-control col-md-7 col-xs-12" path="donGia"></form:input>
+
+										</div>
+									</div>
+									
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="soLuong" for="soLuong">Số lượng
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input type="number" id="soLuong"
+												class="form-control col-md-7 col-xs-12" path="soLuong"></form:input>
 
 										</div>
 									</div>
@@ -157,31 +170,42 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Cập nhật thông tin bộ phận</h4>
+								<h4 class="modal-title" id="myModalLabel">Cập nhật thông tin thuốc</h4>
 							</div>
 
 							<form:form class="form-horizontal form-label-left"
-								action="them-bo-phan" method="POST" modelAttribute="boPhan">
+								action="them-thuoc" method="POST" modelAttribute="thuoc">
 								<div class="modal-body">
-									<form:hidden path="id" id="edit-id"/>
+									<form:hidden path="maThuoc" id="edit-id"/>
 									<div class="item form-group">
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											path="tenBoPhan" for="ten">Tên bộ phận <span
+											path="tenThuoc" for="ten">Tên thuốc <span
 												class="required">*</span>
 										</form:label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
 											<form:input type="text" id="edit-ten" required="required"
-												class="form-control col-md-7 col-xs-12" path="tenBoPhan"></form:input>
+												class="form-control col-md-7 col-xs-12" path="tenThuoc"></form:input>
 										</div>
 									</div>
 
 									<div class="item form-group">
 										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
-											path="ghiChu" for="ghiChu">Ghi chú
+											path="donGia" for="edit-donGia">Đơn giá
 										</form:label>
 										<div class="col-md-6 col-sm-6 col-xs-12">
-											<form:input type="text" id="edit-ghiChu"
-												class="form-control col-md-7 col-xs-12" path="ghiChu"></form:input>
+											<form:input type="number" id="edit-donGia"
+												class="form-control col-md-7 col-xs-12" path="donGia"></form:input>
+
+										</div>
+									</div>
+									
+									<div class="item form-group">
+										<form:label class="control-label col-md-3 col-sm-3 col-xs-12"
+											path="soLuong" for="edit-soLuong">Số lượng
+										</form:label>
+										<div class="col-md-6 col-sm-6 col-xs-12">
+											<form:input type="number" id="edit-soLuong"
+												class="form-control col-md-7 col-xs-12" path="soLuong"></form:input>
 
 										</div>
 									</div>
@@ -207,15 +231,15 @@
 								<button type="button" class="close" data-dismiss="modal">
 									<span aria-hidden="true">×</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Xóa bộ phận</h4>
+								<h4 class="modal-title" id="myModalLabel">Xóa thuốc</h4>
 							</div>
 
 							<form:form class="form-horizontal form-label-left"
-								action="xoa-bo-phan" method="POST" modelAttribute="boPhan">
+								action="xoa-thuoc" method="POST" modelAttribute="thuoc">
 								<div class="modal-body">
 									<p id="del-noti"></p>
-									<form:hidden path="id" id="del-id"/>
-									<form:hidden path="tenBoPhan" id="del-ten"/>
+									<form:hidden path="maThuoc" id="del-id"/>
+									<form:hidden path="tenThuoc" id="del-ten"/>
 								</div>
 
 								<div class="modal-footer">
@@ -264,14 +288,15 @@
 			});
 		});
 
-		function suaBoPhan(id, ten, ghiChu){
+		function suaThuoc(id, ten, donGia, soLuong){
 			$("#edit-id").val(id);
 			$("#edit-ten").val(ten);
-			$("#edit-ghiChu").val(ghiChu);
+			$("#edit-donGia").val(donGia);
+			$("#edit-soLuong").val(soLuong);
 		}
 		
-		function xoaBoPhan(id, ten){
-			$("#del-noti").html("Anh/chị có chắc chắn muốn xóa <big>" + ten + "<big>");
+		function xoaThuoc(id, ten){
+			$("#del-noti").html("Anh/chị có chắc chắn muốn xóa thuốc <big>" + ten + "<big>");
 			$("#del-id").val(id);
 			$("#del-ten").val(ten);
 		}

@@ -10,4 +10,5 @@ public interface PhieuKhamBenhService {
 	public PhieuKhamBenh save(PhieuKhamBenh phieuKhamBenh);
 	public PhieuKhamBenh findById(Integer id);
 	public List<PhieuKhamBenh> findPKBChuaThanhToan();
+	public List<PhieuKhamBenh> getPhieuKhamByThangNam(int month, int year);
 }

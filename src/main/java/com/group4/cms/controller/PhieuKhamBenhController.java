@@ -139,8 +139,12 @@ public class PhieuKhamBenhController {
 		@RequestMapping(value = "/phieu-yeu-cau-dich-vu/luu", method = RequestMethod.POST)
 		public String savePhieuYeuCauDichVu(@ModelAttribute("listPYCDichVu") @Valid ListPhieuYeuCauDichVu listPYCDichVu) {
 			List<PhieuYeuCauDichVu> yeuCauDichVu = listPYCDichVu.getPhieuYeuCauDichVu();
-			for (PhieuYeuCauDichVu phieuYeuCauDichVu : yeuCauDichVu) {
-				pycDichVuService.save(phieuYeuCauDichVu);
+			try{
+				for (PhieuYeuCauDichVu phieuYeuCauDichVu : yeuCauDichVu) {
+					pycDichVuService.save(phieuYeuCauDichVu);
+				}
+			}catch (Exception e){
+				
 			}
 			return "redirect:/kham-benh";
 		}

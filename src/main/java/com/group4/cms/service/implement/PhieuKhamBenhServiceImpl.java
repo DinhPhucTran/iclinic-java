@@ -29,4 +29,8 @@ public class PhieuKhamBenhServiceImpl implements PhieuKhamBenhService{
 	public List<PhieuKhamBenh> findPKBChuaThanhToan(){
 		return phieuKhamBenhDao.findPKBChuaThanhToan();
 	}
+	@Override
+	public List<PhieuKhamBenh> getPhieuKhamByThangNam(int month, int year) {
+		return phieuKhamBenhDao.getPhieuKhamByThangNam(month, year);
+	}
 }
