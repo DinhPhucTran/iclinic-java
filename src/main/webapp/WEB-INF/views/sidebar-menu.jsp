@@ -44,33 +44,31 @@
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							 <li><a href="kham-benh">Khám bệnh</a></li>
-							<li><a href="media_gallery.html">Media Gallery</a></li>
-							<li><a href="typography.html">Typography</a></li>
 						</ul></li>
 					<li><a><i class="fa fa-heartbeat"></i> Điều trị <span
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="benh-nhan-dieu-tri">Danh sách bệnh nhân</a></li>
 						</ul></li>
-					<li><a><i class="fa fa-bar-chart-o"></i> Quản lý thuốc <span
+					<!-- <li><a><i class="fa fa-bar-chart-o"></i> Quản lý thuốc <span
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="chartjs.html">Chart JS</a></li>
 							<li><a href="chartjs2.html">Chart JS2</a></li>
-						</ul></li>
-					<li><a><i class="fa fa-clone"></i>Báo cáo <span
+						</ul></li> -->
+					<!-- <li><a><i class="fa fa-clone"></i>Báo cáo <span
 							class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
 							<li><a href="fixed_footer.html">Fixed Footer</a></li>
-						</ul></li>
-					<li><a><i class="fa fa-bar-chart-o"></i> Quản lý đối tượng
+						</ul></li> -->
+					<!-- <li><a><i class="fa fa-bar-chart-o"></i> Quản lý đối tượng
 							<span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
 							<li><a href="benh-nhan">Bệnh nhân - danh sách</a></li>
 							<li><a href="bo-phan">Bộ phận - Thêm, xoá, sửa</a></li>
 							<li><a href="dich-vu">Dịch vụ - Thêm, xoá, sửa</a></li>
-						</ul></li>
+						</ul></li> -->
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><a href="user-list"><i class="fa fa-user"></i> Quản lý người dùng
 							<span class="fa fa-chevron-down"></span></a>
