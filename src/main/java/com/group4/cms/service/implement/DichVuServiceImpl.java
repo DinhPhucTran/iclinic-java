@@ -46,4 +46,17 @@ public class DichVuServiceImpl implements DichVuService {
 	public DichVu findById(int id) {
 		return dvDao.findOne(id);
 	}
+
+	@Override
+	public int countDichVu() {
+		// TODO Auto-generated method stub
+		try{
+			return dvDao.countDichVu();
+		} catch (Exception e){
+			e.printStackTrace();
+			return 0;
+		}
+	}
+
+	
 }
