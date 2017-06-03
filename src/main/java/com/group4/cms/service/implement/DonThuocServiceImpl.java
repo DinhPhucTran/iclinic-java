@@ -46,4 +46,8 @@ public class DonThuocServiceImpl implements DonThuocService {
 	public DonThuoc findById(int id) {
 		return dtDao.findOne(id);
 	}
+
+	public List<DonThuoc> findByMaPhieuKham(Integer maPhieuKham){
+		return dtDao.findByMaPhieuKham(maPhieuKham);
+	}
 }

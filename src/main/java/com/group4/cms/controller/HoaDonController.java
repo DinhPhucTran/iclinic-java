@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.group4.cms.model.DichVu;
+import com.group4.cms.model.DonThuoc;
 import com.group4.cms.model.HoaDon;
 import com.group4.cms.model.PhieuKhamBenh;
 import com.group4.cms.model.PhieuKhamDangCho;
 import com.group4.cms.model.PhieuYeuCauDichVu;
+import com.group4.cms.service.DonThuocService;
 import com.group4.cms.service.HoaDonService;
 import com.group4.cms.service.PhieuKhamBenhService;
 import com.group4.cms.service.PhieuKhamDangChoService;
@@ -40,6 +42,9 @@ public class HoaDonController {
 	
 	@Autowired
 	private PhieuYeuCauDichVuService pycDichVuService;
+	
+	@Autowired
+	private DonThuocService dtService;
 	
 	@ModelAttribute("hoaDon")
 	public HoaDon getHoaDon(){
@@ -85,8 +90,15 @@ public class HoaDonController {
 			model.addAttribute("message", "Đã có lỗi xảy ra. Vui lòng thử lại sau.");
 		} else {
 			hoaDon.setNgayThanhToan(new Date());
+			int maPhieuKham = hoaDon.getPhieuKham().getPhieuKhamBenh().getMaPhieuKhamBenh();
+			int maPhieuKhamDC = phieuKhamDangChoService.findByMaPhieuKham(maPhieuKham).get(0).getId();
+			List<DonThuoc> dsDonThuoc = dtService.findByMaPhieuKham(maPhieuKhamDC);
+			double tongTienThuoc = 0;
+			for (DonThuoc donThuoc : dsDonThuoc) {
+				tongTienThuoc += donThuoc.getTongTien();
+			}
+			hoaDon.setTongTien(hoaDon.getTongTien() + tongTienThuoc);
 			hoaDonService.save(hoaDon);
-			System.out.println(hoaDon.getPhieuKham().getPhieuKhamBenh().getMaPhieuKhamBenh());
 			PhieuKhamBenh p = new PhieuKhamBenh();
 			p.setMaPhieuKhamBenh(hoaDon.getPhieuKham().getPhieuKhamBenh().getMaPhieuKhamBenh());
 			p.setTinhTrangThanhToan(true);
