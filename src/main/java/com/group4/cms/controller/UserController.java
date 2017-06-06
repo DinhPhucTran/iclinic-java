@@ -132,7 +132,7 @@ public class UserController {
 		else
 			System.out.println("NULLLLLLLLll");
 
-		if (user.getPassword().trim() != "") {
+		if (!"".equals(user.getPassword())) {
 			String pass = user.getPassword();
 			System.out.println("Pass:" + pass);
 			String hashed = passwordEncoder.encode(pass);

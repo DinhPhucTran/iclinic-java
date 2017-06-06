@@ -40,14 +40,14 @@ public class LoginController {
 
 		String error = "";
 		if (exception instanceof InternalAuthenticationServiceException || exception instanceof BadCredentialsException) {
-			error = "Invalid username or password.";
+			error = "Tên đăng nhập hoặc mật khẩu không đúng.";
 		} else if (exception.getMessage() == null) {
-			error = "An error occured, please try again later.";
+			error = "Đã có lỗi xảy ra, vui lòng thử lại sau.";
 		} else{
 			error = exception.getMessage();
 		}
 
-		return exception.getMessage();
+		return error;
 	}
 	
 	@RequestMapping("/logout")

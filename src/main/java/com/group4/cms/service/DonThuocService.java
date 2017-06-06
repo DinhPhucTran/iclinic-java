@@ -11,4 +11,6 @@ public interface DonThuocService {
 	public void delete(int id);
 	
 	public DonThuoc findById(int id);
+
+	public List<DonThuoc> findByMaPhieuKham(Integer maPhieuKham);
 }

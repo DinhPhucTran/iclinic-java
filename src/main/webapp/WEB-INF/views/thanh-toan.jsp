@@ -105,7 +105,7 @@ font-weight: bold;
 										<div class="form-group">
 											<label class="col-sm-3 control-label">Tổng tiền </label>
 											<div class="col-sm-9">
-												<form:input type="number" min = "0" pattern = "^\d*(\.\d{2}$)?" id="tongTien"
+												<form:input type="number" min = "0" pattern = "^\d*(\.\d{2}$)?" id="tongTien" name = "tongTien"
 												class="form-control col-md-7 col-xs-12" path="tongTien"></form:input>
 											</div>
 										</div>
