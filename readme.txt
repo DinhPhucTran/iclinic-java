@@ -6,6 +6,9 @@ Nguyễn Thị Hằng - 13520244
 
 Link GitHub: https://github.com/DinhPhucTran/iclinic-java
 
+Mở và thực thi file Script1.sql bằng MySQL trước khi chạy ứng dụng.
+Sau khi đã chạy ứng dụng, mở file Script2.sql để thêm một số dữ liệu cần thiết.
+
 Các tài khoản và mật khẩu để đăng nhập vào ứng dụng (sau khi đã có đầy đủ database)
 	admin - 12345
 	bacsi - 12345
